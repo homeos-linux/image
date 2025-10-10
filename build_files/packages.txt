@@ -49,6 +49,7 @@ screen
 
 # System Utilities
 flatpak
+zenity
 
 # Media Codecs and Support (Basic - advanced codecs handled in multimedia script)
 ffmpeg

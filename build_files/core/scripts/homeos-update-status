@@ -7,9 +7,9 @@ echo ""
 
 echo "Container Image Updates:"
 if command -v bootc &> /dev/null; then
-    bootc status || rpm-ostree status
+    sudo bootc status || sudo rpm-ostree status
 else
-    rpm-ostree status
+    sudo rpm-ostree status
 fi
 
 echo ""

@@ -12,9 +12,6 @@ FLATPAKS_FILE="/ctx/flatpaks.txt"
 echo "Adding Flathub repository..."
 flatpak remote-add --if-not-exists --system flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-# Adding launcher.moe repository for user
-flatpak remote-add --if-not-exists --system launcher.moe https://gol.launcher.moe/gol.launcher.moe.flatpakrepo
-
 # Install Flatpaks from the list
 if [ -f "$FLATPAKS_FILE" ]; then
     echo "Reading Flatpaks from $FLATPAKS_FILE..."

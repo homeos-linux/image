@@ -14,7 +14,7 @@ mkdir -p /usr/share/bazaar
 echo "Installing Bazaar configuration files..."
 
 # Copy curated applications configuration
-cp /ctx/core/bazaar/curated.yaml /etc/bazaar/curated.yaml
+cp /ctx/core/bazaar/config.yaml /etc/bazaar/config.yaml
 echo "✓ Curated applications configuration installed"
 
 # Copy main configuration with hooks
