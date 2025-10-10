@@ -5,8 +5,12 @@ set -ouex pipefail
 
 echo "=== Setting up RPM repositories ==="
 
-# Install dnf-plugins-core if needed (for older DNF versions)
-dnf install -y dnf-plugins-core 2>/dev/null || true
+# Install dnf plugins for dnf5 compatibility
+echo "Installing DNF plugins..."
+dnf install -y dnf5-command\(copr\) dnf5-command\(config-manager\) 2>/dev/null || {
+    # Fallback for older DNF versions
+    dnf install -y dnf-plugins-core 2>/dev/null || true
+}
 
 # Add RPM Fusion repositories
 echo "Adding RPM Fusion repositories..."
@@ -21,7 +25,11 @@ dnf config-manager --set-enabled fedora-cisco-openh264 || dnf config-manager set
 
 # Enable homeOS repository
 echo "Enabling homeOS repository..."
-dnf copr enable bubblineyuri/homeOS -y
+dnf copr enable bubblineyuri/homeOS -y || {
+    # Fallback: Add COPR repo manually
+    echo "Fallback: Adding homeOS COPR repository manually..."
+    curl -fsSL https://copr.fedorainfracloud.org/coprs/bubblineyuri/homeOS/repo/fedora-$(rpm -E %fedora)/bubblineyuri-homeOS-fedora-$(rpm -E %fedora).repo -o /etc/yum.repos.d/bubblineyuri-homeOS.repo
+}
 
 # Add Docker CE repository
 echo "Adding Docker CE repository..."
