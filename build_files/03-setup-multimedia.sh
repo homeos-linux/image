@@ -9,8 +9,18 @@ echo "=== Setting up multimedia codecs ==="
 echo "Swapping to full ffmpeg..."
 dnf swap ffmpeg-free ffmpeg --allowerasing -y
 
-# Update multimedia packages
-echo "Updating multimedia packages..."
-dnf update @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin -y
+# Install multimedia packages directly instead of using @multimedia group
+echo "Installing multimedia packages..."
+dnf install -y --setopt="install_weak_deps=False" --skip-unavailable \
+    gstreamer1-plugins-good \
+    gstreamer1-plugins-bad-free \
+    gstreamer1-plugins-bad-freeworld \
+    gstreamer1-plugins-ugly \
+    gstreamer1-plugin-libav \
+    gstreamer1-vaapi \
+    libva-utils \
+    intel-media-driver \
+    mesa-va-drivers \
+    mesa-vdpau-drivers
 
 echo "✓ Multimedia codecs setup complete"

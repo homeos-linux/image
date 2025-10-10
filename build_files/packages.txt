@@ -51,11 +51,8 @@ bluez
 pulseaudio
 pipewire
 wireplumber
-gstreamer1-plugins-good
-gstreamer1-plugins-bad-free
-gstreamer1-plugins-ugly-free
 
-# Media Codecs and Support
+# Media Codecs and Support (Basic - advanced codecs handled in multimedia script)
 ffmpeg
 mesa-dri-drivers
 mesa-vulkan-drivers
