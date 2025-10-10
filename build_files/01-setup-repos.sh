@@ -42,10 +42,6 @@ dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce
 echo "Adding Visual Studio Code repository..."
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
-dnf config-manager --set-enabled code || {
-    # Fallback for dnf5 - directly edit repo file
-    sed -i 's/enabled=0/enabled=1/' /etc/yum.repos.d/vscode.repo 2>/dev/null || true
-}
 
 dnf check-update
 
