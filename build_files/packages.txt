@@ -49,12 +49,6 @@ screen
 
 # System Utilities
 flatpak
-NetworkManager-wifi
-NetworkManager-bluetooth
-bluez
-pulseaudio
-pipewire
-wireplumber
 
 # Media Codecs and Support (Basic - advanced codecs handled in multimedia script)
 ffmpeg

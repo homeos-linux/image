@@ -45,6 +45,14 @@ echo ""
 echo ""
 /ctx/10-copy-core-files.sh
 
+# Step 11: Install Flatpak applications
+echo ""
+/ctx/11-flatpaks.sh
+
+# Step 12: Debloat unnecessary packages
+echo ""
+/ctx/12-debloat.sh
+
 # Setup user session (special script - not numbered)
 echo ""
 /ctx/setup-user-session.sh
