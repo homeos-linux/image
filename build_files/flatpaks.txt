@@ -7,28 +7,33 @@
 # Format: one application ID per line
 # Lines starting with # are comments and will be ignored
 
-org.gnome.SystemMonitor
-org.gnome.Calculator
-org.gnome.TextEditor
-org.gnome.Calendar
-org.gnome.Contacts
-org.gnome.Weather
-org.gnome.clocks
-org.gnome.Maps
-org.gnome.Photos
-org.gnome.Music
-org.gnome.Evince
-org.gnome.eog
-org.gnome.Totem
-org.gnome.font-viewer
-org.gnome.DiskUtility
-org.gnome.Logs
-
-# Software Management
+app.drey.Damask
+ca.desrt.dconf-editor
+com.github.mattjakeman.ExtensionManager
+com.github.tchx84.Flatseal
+io.github.flattool.Warehouse
 io.github.kolunmi.Bazaar
-
-# Web Browsers
-org.mozilla.firefox
+io.github.pwr_solaar.solaar
+io.gitlab.adhami3310.Impression
+it.mijorus.gearlever
+org.gnome.Baobab
+org.gnome.Calculator
+org.gnome.Clocks
+org.gnome.Contacts
+org.gnome.DejaDup
+org.gnome.DiskUtility
+org.gnome.Evince
+org.gnome.Firmware
+org.gnome.Logs
+org.gnome.Loupe
+org.gnome.Maps
+org.gnome.Music
+org.gnome.Photos
+org.gnome.SimpleScan
+org.gnome.TextEditor
+org.gnome.Totem
+org.gnome.World.PikaBackup
+org.gnome.Weather
+org.gnome.font-viewer
 org.libreoffice.LibreOffice
-
-com.mattjakeman.ExtensionManager
+org.mozilla.firefox
