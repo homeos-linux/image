@@ -73,6 +73,10 @@ echo "✓ DNS resolver enabled"
 systemctl enable systemd-homed.service || true
 echo "✓ systemd-homed enabled (if available)"
 
+# Disable NetworkManager-wait-online if not needed
+systemctl disable NetworkManager-wait-online.service || true
+echo "✓ NetworkManager-wait-online disabled (can be enabled if needed)"
+
 # Set default target to graphical
 systemctl set-default graphical.target
 echo "✓ Default target set to graphical"

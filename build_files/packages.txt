@@ -5,6 +5,11 @@ gnome-session
 gnome-settings-daemon
 gnome-keyring
 nautilus
+cups
+gnome-bluetooth
+cups-browsed
+hplip
+firewalld
 
 # Core homeOS Applications
 demonhide
