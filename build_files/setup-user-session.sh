@@ -95,6 +95,18 @@ gsettings set org.gnome.desktop.privacy send-software-usage-stats false
 
 echo "✓ GNOME configuration complete"
 
+# Organize LibreOffice applications into a folder
+echo "Organizing LibreOffice applications..."
+mkdir -p "$HOME/.local/share/applications"
+
+# Create LibreOffice folder using gsettings
+gsettings set org.gnome.desktop.app-folders folder-children "['Utilities', 'YaST', 'LibreOffice']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ name 'LibreOffice'
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ categories "['Office']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ apps "['org.libreoffice.LibreOffice.desktop', 'org.libreoffice.LibreOffice-writer.desktop', 'org.libreoffice.LibreOffice-calc.desktop', 'org.libreoffice.LibreOffice-impress.desktop', 'org.libreoffice.LibreOffice-draw.desktop', 'org.libreoffice.LibreOffice-base.desktop', 'org.libreoffice.LibreOffice-math.desktop', 'org.libreoffice.LibreOffice-startcenter.desktop']"
+
+echo "✓ LibreOffice applications organized into folder"
+
 # Set up demonhide autostart
 echo "Setting up demonhide autostart..."
 cat > "$HOME/.config/autostart/demonhide.desktop" << 'AUTOSTART_EOF'
@@ -224,6 +236,14 @@ lock-delay=uint32 300
 [org/gnome/desktop/privacy]
 report-technical-problems=false
 send-software-usage-stats=false
+
+[org/gnome/desktop/app-folders]
+folder-children=['Utilities', 'YaST', 'LibreOffice']
+
+[org/gnome/desktop/app-folders/folders/LibreOffice]
+name='LibreOffice'
+categories=['Office']
+apps=['org.libreoffice.LibreOffice.desktop', 'org.libreoffice.LibreOffice-writer.desktop', 'org.libreoffice.LibreOffice-calc.desktop', 'org.libreoffice.LibreOffice-impress.desktop', 'org.libreoffice.LibreOffice-draw.desktop', 'org.libreoffice.LibreOffice-base.desktop', 'org.libreoffice.LibreOffice-math.desktop', 'org.libreoffice.LibreOffice-startcenter.desktop']
 EOF
 
 # Update dconf database
