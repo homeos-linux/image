@@ -35,3 +35,8 @@ Categories=System;Settings;
 StartupNotify=true
 EOF
 echo "✓ homeos-update-gui desktop entry created"
+
+# Copy Flatpak list to the target system
+mkdir -p /etc/homeos
+cp /ctx/flatpaks.txt /etc/homeos/flatpaks.txt
+echo "✓ Flatpak list copied to /etc/homeos/flatpaks.txt"

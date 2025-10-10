@@ -48,14 +48,6 @@ cp /ctx/core/scripts/homeos-setup-containers /usr/bin/homeos-setup-containers
 
 echo "✓ Container setup script created: homeos-setup-containers"
 
-# Set up user session integration
-echo "Configuring user session integration..."
-
-# Create a script that runs on user login to set up container environment
-cp /ctx/core/scripts/homeos-container-session-setup /usr/bin/homeos-container-session-setup
-
-echo "✓ Container session setup script created"
-
 # Configure SELinux for containers (if enabled)
 if command -v setsebool &> /dev/null; then
     echo "Configuring SELinux for containers..."

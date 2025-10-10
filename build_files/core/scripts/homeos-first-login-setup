@@ -3,7 +3,7 @@
 # This script runs automatically on first user login and when configuration updates
 
 # Script version - increment when adding new features
-SCRIPT_VERSION="1.2.0"
+SCRIPT_VERSION="1.2.1"
 VERSION_FILE="$HOME/.config/homeos-first-login-version"
 
 # Check current version
@@ -25,7 +25,7 @@ if [ -n "$CURRENT_VERSION" ] && [ "$CURRENT_VERSION" != "$SCRIPT_VERSION" ]; the
 fi
 
 # Read Flatpak list from flatpaks.txt file
-FLATPAKS_FILE="/ctx/flatpaks.txt"
+FLATPAKS_FILE="/etc/homeos/flatpaks.txt"
 
 # Install Flatpaks from the list
 if [ -f "$FLATPAKS_FILE" ]; then
@@ -136,11 +136,6 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"
 
 echo "✓ Custom keybindings configured"
-
-# Set up container environment for user
-echo "Setting up container environment..."
-/usr/local/bin/homeos-container-session-setup
-echo "✓ Container environment configured"
 
 # Set up demonhide autostart
 echo "Setting up demonhide autostart..."
