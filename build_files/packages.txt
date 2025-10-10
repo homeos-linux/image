@@ -46,6 +46,7 @@ tar
 rsync
 tmux
 screen
+code
 
 # System Utilities
 flatpak
