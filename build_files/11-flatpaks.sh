@@ -25,7 +25,7 @@ if [ -f "$FLATPAKS_FILE" ]; then
         echo "Installing ${#FLATPAKS[@]} Flatpaks..."
         for flatpak in "${FLATPAKS[@]}"; do
             echo "Installing: $flatpak"
-            flatpak install --system --noninteractive flathub "$flatpak" || echo "Failed to install $flatpak"
+            flatpak install --system --noninteractive --no-sandbox flathub "$flatpak" || echo "Failed to install $flatpak"
         done
         echo "✓ Flatpak applications installation complete"
     else
