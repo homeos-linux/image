@@ -1,0 +1,4 @@
+[distro]
+name = "homeOS"
+version = "42"
+base = "fedora-42"
