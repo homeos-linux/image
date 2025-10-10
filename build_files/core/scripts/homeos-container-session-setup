@@ -12,18 +12,3 @@ mkdir -p "$HOME/.local/share/containers"
 
 # Set up container shortcuts in applications
 mkdir -p "$HOME/.local/share/applications"
-
-# Check if user needs Docker group setup and show notification
-if ! groups | grep -q docker; then
-    # Show one-time notification about Docker setup
-    if [ ! -f "$HOME/.config/homeos-docker-setup-notified" ]; then
-        if command -v notify-send &> /dev/null; then
-            notify-send "Docker Setup Required" \
-                "To use Docker, please run 'Docker Setup' from the applications menu or command: sudo usermod -aG docker $USER" \
-                --icon=docker \
-                --expire-time=10000
-        fi
-        mkdir -p "$HOME/.config"
-        touch "$HOME/.config/homeos-docker-setup-notified"
-    fi
-fi

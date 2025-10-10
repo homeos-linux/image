@@ -14,7 +14,6 @@ show_help() {
     echo "  arch        Create Arch Linux container"
     echo "  debian      Create Debian container"
     echo "  fedora      Create Fedora container"
-    echo "  docker-test Test Docker installation"
     echo "  list        List available containers"
     echo "  help        Show this help message"
 }
@@ -56,20 +55,6 @@ list_containers() {
     distrobox list
 }
 
-test_docker() {
-    echo "Testing Docker installation..."
-    if docker --version; then
-        echo "✓ Docker CLI is working"
-        if docker run --rm hello-world; then
-            echo "✓ Docker is working correctly"
-        else
-            echo "✗ Docker test failed - you may need to log out and back in"
-        fi
-    else
-        echo "✗ Docker CLI not found"
-    fi
-}
-
 case "${1:-help}" in
     ubuntu)
         setup_ubuntu
@@ -85,9 +70,6 @@ case "${1:-help}" in
         ;;
     list)
         list_containers
-        ;;
-    docker-test)
-        test_docker
         ;;
     help|--help|-h)
         show_help

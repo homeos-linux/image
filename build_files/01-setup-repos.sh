@@ -27,11 +27,6 @@ dnf copr enable bubblineyuri/homeOS -y || {
     echo "Fallback: Adding homeOS COPR repository manually..."
     curl -fsSL https://copr.fedorainfracloud.org/coprs/bubblineyuri/homeOS/repo/fedora-$(rpm -E %fedora)/bubblineyuri-homeOS-fedora-$(rpm -E %fedora).repo -o /etc/yum.repos.d/bubblineyuri-homeOS.repo
 }
-
-# Add Docker CE repository
-echo "Adding Docker CE repository..."
-curl -fsSL https://download.docker.com/linux/fedora/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
-
 # Add Visual Studio Code repository
 echo "Adding Visual Studio Code repository..."
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc

@@ -9,35 +9,15 @@ echo "=== Setting up Distrobox and container support ==="
 # Enable and configure systemd services for containers
 echo "Configuring container services..."
 
-# Enable Docker service
-systemctl enable docker.service
-echo "✓ Docker service enabled"
-
 # Enable podman socket for rootless containers
 systemctl --global enable podman.socket
 echo "✓ Podman socket enabled for rootless containers"
 
-# Create distrobox configuration directory
-mkdir -p /etc/distrobox
-
-# Configure Docker group
-echo "Configuring Docker group..."
-groupadd -f docker
-echo "✓ Docker group created"
-
-# Create Docker configuration
-mkdir -p /etc/docker
-cat > /etc/docker/daemon.json << 'EOF'
-{
-  "log-driver": "journald",
-  "storage-driver": "overlay2",
-  "live-restore": true,
-  "userland-proxy": false,
-  "experimental": false
-}
-EOF
-
-echo "✓ Docker daemon configuration created"
+# Symlink podman to docker for compatibility
+if ! command -v docker &> /dev/null; then
+    ln -s /usr/bin/podman /usr/bin/docker
+    echo "✓ Symlinked podman to docker"
+fi
 
 # Create default distrobox configuration
 cat > /etc/distrobox/distrobox.conf << 'EOF'
@@ -67,42 +47,6 @@ echo "✓ Distrobox configuration created"
 cp /ctx/core/scripts/homeos-setup-containers /usr/bin/homeos-setup-containers
 
 echo "✓ Container setup script created: homeos-setup-containers"
-
-# Create desktop integration for common tasks
-mkdir -p /usr/share/applications
-
-cat > /usr/share/applications/homeos-container-manager.desktop << 'EOF'
-[Desktop Entry]
-Name=Container Manager
-Comment=Manage development containers with Distrobox
-GenericName=Container Management
-Exec=io.github.dvlv.boxbuddyrs
-Icon=io.github.dvlv.boxbuddyrs
-Terminal=false
-Type=Application
-Categories=System;Development;
-Keywords=container;distrobox;podman;development;
-StartupNotify=true
-EOF
-
-# Create desktop application for Docker setup
-cat > /usr/share/applications/homeos-docker-setup.desktop << 'EOF'
-[Desktop Entry]
-Name=Docker Setup
-Comment=Set up Docker access for your user account
-GenericName=Container Setup
-Exec=/usr/bin/homeos-docker-setup-gui
-Icon=docker
-Terminal=false
-Type=Application
-Categories=System;Settings;
-Keywords=docker;container;setup;permissions;
-StartupNotify=true
-NoDisplay=false
-EOF
-
-# Create GUI setup script for Docker
-cp /ctx/core/scripts/homeos-docker-setup-gui /usr/bin/homeos-docker-setup-gui
 
 # Set up user session integration
 echo "Configuring user session integration..."
