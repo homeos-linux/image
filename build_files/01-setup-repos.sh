@@ -33,10 +33,7 @@ dnf copr enable bubblineyuri/homeOS -y || {
 
 # Add Docker CE repository
 echo "Adding Docker CE repository..."
-dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo || {
-    # Fallback for dnf5 - direct download
-    curl -fsSL https://download.docker.com/linux/fedora/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
-}
+curl -fsSL https://download.docker.com/linux/fedora/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
 
 # Add Visual Studio Code repository
 echo "Adding Visual Studio Code repository..."
