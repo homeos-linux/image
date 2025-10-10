@@ -37,3 +37,6 @@ org.gnome.Weather
 org.gnome.font-viewer
 org.libreoffice.LibreOffice
 org.mozilla.firefox
+
+# Container Management
+io.github.ldelossa.Distroshelf

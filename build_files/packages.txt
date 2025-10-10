@@ -9,6 +9,13 @@ nautilus
 
 # Core homeOS Applications
 demonhide
+distrobox
+podman
+docker-ce
+docker-ce-cli
+containerd.io
+docker-buildx-plugin
+docker-compose-plugin
 
 # GNOME Extensions and Customization
 gnome-tweaks 

@@ -41,6 +41,10 @@ echo ""
 echo ""
 /ctx/09-setup-bazaar.sh
 
+# Step 10: Setup container support (Distrobox)
+echo ""
+/ctx/10-setup-containers.sh
+
 # Setup user session (special script - not numbered)
 echo ""
 /ctx/setup-user-session.sh

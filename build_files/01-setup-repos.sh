@@ -17,4 +17,8 @@ dnf config-manager setopt fedora-cisco-openh264.enabled=1
 echo "Enabling homeOS repository..."
 dnf copr enable bubblineyuri/homeOS -y
 
+# Add Docker CE repository
+echo "Adding Docker CE repository..."
+dnf config-manager addrepo https://download.docker.com/linux/fedora/docker-ce.repo
+
 echo "✓ RPM repositories setup complete"

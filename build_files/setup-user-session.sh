@@ -107,6 +107,11 @@ gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folder
 
 echo "✓ LibreOffice applications organized into folder"
 
+# Set up container environment for user
+echo "Setting up container environment..."
+/usr/local/bin/homeos-container-session-setup
+echo "✓ Container environment configured"
+
 # Set up demonhide autostart
 echo "Setting up demonhide autostart..."
 cat > "$HOME/.config/autostart/demonhide.desktop" << 'AUTOSTART_EOF'
