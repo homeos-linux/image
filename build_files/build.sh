@@ -49,6 +49,10 @@ echo ""
 echo ""
 /ctx/11-setup-anaconda.sh
 
+# Step 12: Copy core files
+echo ""
+/ctx/12-copy-core-files.sh
+
 # Setup user session (special script - not numbered)
 echo ""
 /ctx/setup-user-session.sh
