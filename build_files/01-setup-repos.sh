@@ -18,10 +18,7 @@ dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-
 
 # Enable Cisco OpenH264 repository
 echo "Enabling Cisco OpenH264 repository..."
-dnf config-manager --set-enabled fedora-cisco-openh264 || dnf config-manager setopt fedora-cisco-openh264.enabled=1 || {
-    # Fallback for dnf5 - directly edit repo file
-    sed -i 's/enabled=0/enabled=1/' /etc/yum.repos.d/fedora-cisco-openh264.repo 2>/dev/null || true
-}
+sed -i 's/enabled=0/enabled=1/' /etc/yum.repos.d/fedora-cisco-openh264.repo 2>/dev/null || true
 
 # Enable homeOS repository
 echo "Enabling homeOS repository..."
@@ -39,7 +36,5 @@ curl -fsSL https://download.docker.com/linux/fedora/docker-ce.repo -o /etc/yum.r
 echo "Adding Visual Studio Code repository..."
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
-
-dnf check-update
 
 echo "✓ RPM repositories setup complete"
