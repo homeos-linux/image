@@ -45,6 +45,10 @@ echo ""
 echo ""
 /ctx/10-setup-containers.sh
 
+# Step 11: Setup Anaconda installer customizations
+echo ""
+/ctx/11-setup-anaconda.sh
+
 # Setup user session (special script - not numbered)
 echo ""
 /ctx/setup-user-session.sh
