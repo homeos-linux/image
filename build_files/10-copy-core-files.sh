@@ -9,8 +9,3 @@ echo "=== Copying core files ==="
 cp /ctx/core/homeos-update /usr/bin/homeos-update
 chmod +x /usr/bin/homeos-update
 echo "✓ homeos-update script copied and made executable"
-
-# Copy flatpak installation file
-mkdir -p /etc/homeos
-cp /ctx/core/flatpaks.txt /etc/homeos/flatpaks.txt
-echo "✓ Flatpak list copied to /etc/homeos/flatpaks.txt"

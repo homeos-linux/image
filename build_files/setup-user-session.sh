@@ -23,40 +23,6 @@ cat > /usr/local/bin/homeos-first-login-setup << 'EOF'
 SCRIPT_VERSION="1.1.0"
 VERSION_FILE="$HOME/.config/homeos-first-login-version"
 
-# We're installing Flatpaks here, because we cannot gurantee that the user is always online
-echo "Installing Flatpak applications..."
-
-# Read Flatpak list from flatpaks.txt file
-FLATPAKS_FILE="/etc/homeos/flatpaks.txt"
-
-# Add Flathub repository for user
-echo "Adding Flathub repository..."
-flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-# Adding launcher.moe repository for user
-flatpak remote-add --if-not-exists --user launcher.moe https://gol.launcher.moe/gol.launcher.moe.flatpakrepo
-
-# Install Flatpaks from the list
-if [ -f "$FLATPAKS_FILE" ]; then
-    echo "Reading Flatpaks from $FLATPAKS_FILE..."
-    # Read non-empty, non-comment lines from the file
-    FLATPAKS=($(grep -v '^[[:space:]]*#' "$FLATPAKS_FILE" | grep -v '^[[:space:]]*$' | tr '\n' ' '))
-    
-    if [ ${#FLATPAKS[@]} -gt 0 ]; then
-        echo "Installing ${#FLATPAKS[@]} Flatpaks..."
-        for flatpak in "${FLATPAKS[@]}"; do
-            echo "Installing: $flatpak"
-            flatpak install --system --noninteractive flathub "$flatpak" || echo "Failed to install $flatpak"
-        done
-        echo "✓ Flatpak applications installation complete"
-    else
-        echo "No Flatpaks specified for installation in $FLATPAKS_FILE"
-    fi
-else
-    echo "Flatpaks file not found: $FLATPAKS_FILE"
-    echo "You can create this file to specify Flatpaks to install"
-fi
-
 # Check current version
 CURRENT_VERSION=""
 if [ -f "$VERSION_FILE" ]; then
