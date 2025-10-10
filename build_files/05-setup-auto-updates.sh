@@ -84,46 +84,14 @@ DefaultMemoryPressureLimit=80%
 EOF
 
 # Create update notification script (optional)
-touch /usr/local/bin/update-notification
-cat > /usr/local/bin/update-notification << 'EOF'
-#!/bin/bash
-# Simple update notification for homeOS
-
-# Check if updates are staged
-if rpm-ostree status | grep -q "staged"; then
-    echo "homeOS: Updates are staged and ready for reboot"
-    # You can add desktop notification here if needed
-    # notify-send "homeOS Updates" "Updates are ready. Reboot when convenient."
-fi
-
-# Check if Flatpak updates are available
-if flatpak remote-ls --updates flathub 2>/dev/null | grep -q .; then
-    echo "homeOS: Flatpak updates available"
-    # notify-send "homeOS Updates" "Flatpak updates are available"
-fi
-EOF
-
-chmod +x /usr/local/bin/update-notification
+cp /ctx/core/scripts/update-notification /usr/bin/update-notification
 
 # Set up bootc auto-update (if available)
 echo "Configuring bootc automatic updates..."
 if command -v bootc &> /dev/null; then
     # Enable bootc auto-update
     mkdir -p /etc/bootc
-    
-    cat > /etc/bootc/update.toml << 'EOF'
-# bootc automatic update configuration
-[updates]
-# Check for updates automatically
-enabled = true
-
-# Update policy: "staged" stages updates but doesn't reboot
-# "auto" would automatically reboot (not recommended for desktop)
-policy = "staged"
-
-# Check interval (in seconds) - daily
-interval = 86400
-EOF
+    cp /ctx/core/bootc/update.toml /etc/bootc/update.toml
 
     # Enable bootc update service if it exists
     if systemctl list-unit-files | grep -q bootc-update; then
@@ -132,36 +100,7 @@ EOF
 fi
 
 # Create a simple update status script
-touch /usr/local/bin/homeos-update-status
-cat > /usr/local/bin/homeos-update-status << 'EOF'
-#!/bin/bash
-# Show update status for homeOS
-
-echo "homeOS Update Status"
-echo "===================="
-echo ""
-
-echo "Container Image Updates:"
-if command -v bootc &> /dev/null; then
-    bootc status || rpm-ostree status
-else
-    rpm-ostree status
-fi
-
-echo ""
-echo "Flatpak Updates:"
-flatpak remote-ls --updates flathub 2>/dev/null || echo "No Flatpak updates available"
-
-echo ""
-echo "Update Services Status:"
-echo "- rpm-ostreed-automatic.timer: $(systemctl is-enabled rpm-ostreed-automatic.timer 2>/dev/null || echo 'not available')"
-echo "- flatpak-update.timer: $(systemctl is-enabled flatpak-update.timer 2>/dev/null || echo 'not available')"
-if systemctl list-unit-files | grep -q bootc-update.timer; then
-    echo "- bootc-update.timer: $(systemctl is-enabled bootc-update.timer 2>/dev/null || echo 'not available')"
-fi
-EOF
-
-chmod +x /usr/local/bin/homeos-update-status
+cp /ctx/core/scripts/homeos-update-status /usr/bin/homeos-update-status
 
 echo "✓ Automatic updates configuration complete"
 echo ""

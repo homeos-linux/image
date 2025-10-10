@@ -64,112 +64,7 @@ echo "✓ Distrobox configuration created"
 
 # Create helpful container management scripts
 # Create a script to set up common development containers
-touch /usr/local/bin/homeos-setup-containers
-cat > /usr/local/bin/homeos-setup-containers << 'EOF'
-#!/bin/bash
-# homeOS Container Setup Script
-# Sets up common development environments
-
-set -euo pipefail
-
-show_help() {
-    echo "homeOS Container Setup"
-    echo ""
-    echo "Usage: $0 [COMMAND]"
-    echo ""
-    echo "Commands:"
-    echo "  ubuntu      Create Ubuntu container"
-    echo "  arch        Create Arch Linux container"
-    echo "  debian      Create Debian container"
-    echo "  fedora      Create Fedora container"
-    echo "  docker-test Test Docker installation"
-    echo "  list        List available containers"
-    echo "  help        Show this help message"
-}
-
-setup_ubuntu() {
-    echo "Setting up Ubuntu container..."
-    distrobox create --name ubuntu --image ubuntu:latest
-    distrobox enter ubuntu -- sudo apt update
-    distrobox enter ubuntu -- sudo apt install -y build-essential git curl wget vim nano
-    echo "✓ Ubuntu container ready: distrobox enter ubuntu"
-}
-
-setup_arch() {
-    echo "Setting up Arch Linux container..."
-    distrobox create --name arch --image archlinux:latest
-    distrobox enter arch -- sudo pacman -Syu --noconfirm
-    distrobox enter arch -- sudo pacman -S --noconfirm base-devel git curl wget vim nano
-    echo "✓ Arch container ready: distrobox enter arch"
-}
-
-setup_debian() {
-    echo "Setting up Debian container..."
-    distrobox create --name debian --image debian:stable
-    distrobox enter debian -- sudo apt update
-    distrobox enter debian -- sudo apt install -y build-essential git curl wget vim nano
-    echo "✓ Debian container ready: distrobox enter debian"
-}
-
-setup_fedora() {
-    echo "Setting up Fedora container..."
-    distrobox create --name fedora --image fedora:latest
-    distrobox enter fedora -- sudo dnf update -y
-    distrobox enter fedora -- sudo dnf install -y @development-tools git curl wget vim nano
-    echo "✓ Fedora container ready: distrobox enter fedora"
-}
-
-list_containers() {
-    echo "Available containers:"
-    distrobox list
-}
-
-test_docker() {
-    echo "Testing Docker installation..."
-    if docker --version; then
-        echo "✓ Docker CLI is working"
-        if docker run --rm hello-world; then
-            echo "✓ Docker is working correctly"
-        else
-            echo "✗ Docker test failed - you may need to log out and back in"
-        fi
-    else
-        echo "✗ Docker CLI not found"
-    fi
-}
-
-case "${1:-help}" in
-    ubuntu)
-        setup_ubuntu
-        ;;
-    arch)
-        setup_arch
-        ;;
-    debian)
-        setup_debian
-        ;;
-    fedora)
-        setup_fedora
-        ;;
-    list)
-        list_containers
-        ;;
-    docker-test)
-        test_docker
-        ;;
-    help|--help|-h)
-        show_help
-        ;;
-    *)
-        echo "Unknown command: $1"
-        echo ""
-        show_help
-        exit 1
-        ;;
-esac
-EOF
-
-chmod +x /usr/local/bin/homeos-setup-containers
+cp /ctx/core/scripts/homeos-setup-containers /usr/bin/homeos-setup-containers
 
 echo "✓ Container setup script created: homeos-setup-containers"
 
@@ -207,76 +102,13 @@ NoDisplay=false
 EOF
 
 # Create GUI setup script for Docker
-touch /usr/local/bin/homeos-docker-setup-gui
-cat > /usr/local/bin/homeos-docker-setup-gui << 'EOF'
-#!/bin/bash
-# GUI Docker setup script using pkexec
-
-# Check if user is already in docker group
-if groups | grep -q docker; then
-    zenity --info --title="Docker Setup" --text="You already have Docker access!" 2>/dev/null || {
-        notify-send "Docker Setup" "You already have Docker access!"
-    }
-    exit 0
-fi
-
-# Ask user if they want to set up Docker
-if zenity --question --title="Docker Setup" --text="Would you like to set up Docker access for your user account?\n\nThis will add you to the docker group and requires administrator privileges." 2>/dev/null; then
-    # Use pkexec to add user to docker group
-    if pkexec usermod -aG docker "$USER"; then
-        zenity --info --title="Docker Setup Complete" --text="You have been added to the docker group!\n\nPlease log out and log back in for the changes to take effect." 2>/dev/null || {
-            notify-send "Docker Setup Complete" "Please log out and log back in for Docker access."
-        }
-    else
-        zenity --error --title="Docker Setup Failed" --text="Failed to add user to docker group.\n\nPlease run manually: sudo usermod -aG docker $USER" 2>/dev/null || {
-            notify-send "Docker Setup Failed" "Run: sudo usermod -aG docker $USER"
-        }
-    fi
-else
-    echo "Docker setup cancelled by user"
-fi
-EOF
-
-chmod +x /usr/local/bin/homeos-docker-setup-gui
+cp /ctx/core/scripts/homeos-docker-setup-gui /usr/bin/homeos-docker-setup-gui
 
 # Set up user session integration
 echo "Configuring user session integration..."
 
 # Create a script that runs on user login to set up container environment
-touch /usr/local/bin/homeos-container-session-setup
-cat > /usr/local/bin/homeos-container-session-setup << 'EOF'
-#!/bin/bash
-# Set up container environment for user session
-
-# Enable lingering for the user to allow containers to run without login
-loginctl enable-linger "$USER" 2>/dev/null || true
-
-# Set up XDG runtime directory permissions for containers
-chmod 755 "$XDG_RUNTIME_DIR" 2>/dev/null || true
-
-# Create containers directory if it doesn't exist
-mkdir -p "$HOME/.local/share/containers"
-
-# Set up container shortcuts in applications
-mkdir -p "$HOME/.local/share/applications"
-
-# Check if user needs Docker group setup and show notification
-if ! groups | grep -q docker; then
-    # Show one-time notification about Docker setup
-    if [ ! -f "$HOME/.config/homeos-docker-setup-notified" ]; then
-        if command -v notify-send &> /dev/null; then
-            notify-send "Docker Setup Required" \
-                "To use Docker, please run 'Docker Setup' from the applications menu or command: sudo usermod -aG docker $USER" \
-                --icon=docker \
-                --expire-time=10000
-        fi
-        mkdir -p "$HOME/.config"
-        touch "$HOME/.config/homeos-docker-setup-notified"
-    fi
-fi
-EOF
-
-chmod +x /usr/local/bin/homeos-container-session-setup
+cp /ctx/core/scripts/homeos-container-session-setup /usr/bin/homeos-container-session-setup
 
 echo "✓ Container session setup script created"
 

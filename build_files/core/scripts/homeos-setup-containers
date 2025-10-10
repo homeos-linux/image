@@ -1,0 +1,101 @@
+#!/bin/bash
+# homeOS Container Setup Script
+# Sets up common development environments
+
+set -euo pipefail
+
+show_help() {
+    echo "homeOS Container Setup"
+    echo ""
+    echo "Usage: $0 [COMMAND]"
+    echo ""
+    echo "Commands:"
+    echo "  ubuntu      Create Ubuntu container"
+    echo "  arch        Create Arch Linux container"
+    echo "  debian      Create Debian container"
+    echo "  fedora      Create Fedora container"
+    echo "  docker-test Test Docker installation"
+    echo "  list        List available containers"
+    echo "  help        Show this help message"
+}
+
+setup_ubuntu() {
+    echo "Setting up Ubuntu container..."
+    distrobox create --name ubuntu --image ubuntu:latest
+    distrobox enter ubuntu -- sudo apt update
+    distrobox enter ubuntu -- sudo apt install -y build-essential git curl wget vim nano
+    echo "✓ Ubuntu container ready: distrobox enter ubuntu"
+}
+
+setup_arch() {
+    echo "Setting up Arch Linux container..."
+    distrobox create --name arch --image archlinux:latest
+    distrobox enter arch -- sudo pacman -Syu --noconfirm
+    distrobox enter arch -- sudo pacman -S --noconfirm base-devel git curl wget vim nano
+    echo "✓ Arch container ready: distrobox enter arch"
+}
+
+setup_debian() {
+    echo "Setting up Debian container..."
+    distrobox create --name debian --image debian:stable
+    distrobox enter debian -- sudo apt update
+    distrobox enter debian -- sudo apt install -y build-essential git curl wget vim nano
+    echo "✓ Debian container ready: distrobox enter debian"
+}
+
+setup_fedora() {
+    echo "Setting up Fedora container..."
+    distrobox create --name fedora --image fedora:latest
+    distrobox enter fedora -- sudo dnf update -y
+    distrobox enter fedora -- sudo dnf install -y @development-tools git curl wget vim nano
+    echo "✓ Fedora container ready: distrobox enter fedora"
+}
+
+list_containers() {
+    echo "Available containers:"
+    distrobox list
+}
+
+test_docker() {
+    echo "Testing Docker installation..."
+    if docker --version; then
+        echo "✓ Docker CLI is working"
+        if docker run --rm hello-world; then
+            echo "✓ Docker is working correctly"
+        else
+            echo "✗ Docker test failed - you may need to log out and back in"
+        fi
+    else
+        echo "✗ Docker CLI not found"
+    fi
+}
+
+case "${1:-help}" in
+    ubuntu)
+        setup_ubuntu
+        ;;
+    arch)
+        setup_arch
+        ;;
+    debian)
+        setup_debian
+        ;;
+    fedora)
+        setup_fedora
+        ;;
+    list)
+        list_containers
+        ;;
+    docker-test)
+        test_docker
+        ;;
+    help|--help|-h)
+        show_help
+        ;;
+    *)
+        echo "Unknown command: $1"
+        echo ""
+        show_help
+        exit 1
+        ;;
+esac

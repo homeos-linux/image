@@ -1,0 +1,15 @@
+#!/bin/bash
+# Simple update notification for homeOS
+
+# Check if updates are staged
+if rpm-ostree status | grep -q "staged"; then
+    echo "homeOS: Updates are staged and ready for reboot"
+    # You can add desktop notification here if needed
+    # notify-send "homeOS Updates" "Updates are ready. Reboot when convenient."
+fi
+
+# Check if Flatpak updates are available
+if flatpak remote-ls --updates flathub 2>/dev/null | grep -q .; then
+    echo "homeOS: Flatpak updates available"
+    # notify-send "homeOS Updates" "Flatpak updates are available"
+fi

@@ -1,0 +1,25 @@
+#!/bin/bash
+# Show update status for homeOS
+
+echo "homeOS Update Status"
+echo "===================="
+echo ""
+
+echo "Container Image Updates:"
+if command -v bootc &> /dev/null; then
+    bootc status || rpm-ostree status
+else
+    rpm-ostree status
+fi
+
+echo ""
+echo "Flatpak Updates:"
+flatpak remote-ls --updates flathub 2>/dev/null || echo "No Flatpak updates available"
+
+echo ""
+echo "Update Services Status:"
+echo "- rpm-ostreed-automatic.timer: $(systemctl is-enabled rpm-ostreed-automatic.timer 2>/dev/null || echo 'not available')"
+echo "- flatpak-update.timer: $(systemctl is-enabled flatpak-update.timer 2>/dev/null || echo 'not available')"
+if systemctl list-unit-files | grep -q bootc-update.timer; then
+    echo "- bootc-update.timer: $(systemctl is-enabled bootc-update.timer 2>/dev/null || echo 'not available')"
+fi

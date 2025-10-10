@@ -1,0 +1,29 @@
+#!/bin/bash
+# Set up container environment for user session
+
+# Enable lingering for the user to allow containers to run without login
+loginctl enable-linger "$USER" 2>/dev/null || true
+
+# Set up XDG runtime directory permissions for containers
+chmod 755 "$XDG_RUNTIME_DIR" 2>/dev/null || true
+
+# Create containers directory if it doesn't exist
+mkdir -p "$HOME/.local/share/containers"
+
+# Set up container shortcuts in applications
+mkdir -p "$HOME/.local/share/applications"
+
+# Check if user needs Docker group setup and show notification
+if ! groups | grep -q docker; then
+    # Show one-time notification about Docker setup
+    if [ ! -f "$HOME/.config/homeos-docker-setup-notified" ]; then
+        if command -v notify-send &> /dev/null; then
+            notify-send "Docker Setup Required" \
+                "To use Docker, please run 'Docker Setup' from the applications menu or command: sudo usermod -aG docker $USER" \
+                --icon=docker \
+                --expire-time=10000
+        fi
+        mkdir -p "$HOME/.config"
+        touch "$HOME/.config/homeos-docker-setup-notified"
+    fi
+fi

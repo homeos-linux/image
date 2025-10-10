@@ -1,0 +1,11 @@
+# bootc automatic update configuration
+[updates]
+# Check for updates automatically
+enabled = true
+
+# Update policy: "staged" stages updates but doesn't reboot
+# "auto" would automatically reboot (not recommended for desktop)
+policy = "staged"
+
+# Check interval (in seconds) - daily
+interval = 86400
