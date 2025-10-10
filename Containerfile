@@ -1,8 +1,6 @@
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /
-COPY anaconda_addon /anaconda_addon
-COPY branding /branding
 
 # Base Image
 FROM quay.io/fedora/fedora-bootc:42

@@ -12,11 +12,11 @@ mkdir -p /usr/share/anaconda/branding/homeos
 
 # Copy custom addon
 mkdir -p /usr/share/anaconda/addons/org_homeos_setup
-cp /tmp/anaconda_addon/org_homeos_setup.py /usr/share/anaconda/addons/org_homeos_setup/
-cp /tmp/anaconda_addon/homeos_setup.glade /usr/share/anaconda/addons/org_homeos_setup/
+cp /ctx/core/anaconda_addon/org_homeos_setup.py /usr/share/anaconda/addons/org_homeos_setup/
+cp /ctx/core/anaconda_addon/homeos_setup.glade /usr/share/anaconda/addons/org_homeos_setup/
 
 # Copy branding configuration
-cp /tmp/branding/product.conf /usr/share/anaconda/branding/homeos/
+cp /ctx/core/branding/product.conf /usr/share/anaconda/branding/homeos/
 
 # Create homeOS installer theme
 cat > /usr/share/anaconda/branding/homeos/anaconda-gtk.css << 'EOF'
