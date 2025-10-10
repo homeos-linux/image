@@ -151,6 +151,23 @@ AUTOSTART_EOF
 
 echo "✓ DemonHide autostart configured"
 
+# Set up Damask autostart
+echo "Setting up Damask autostart..."
+cat > "$HOME/.config/autostart/damask.desktop" << 'AUTOSTART_EOF'
+[Desktop Entry]
+Type=Application
+Name=app.drey.Damask
+X-XDP-Autostart=app.drey.Damask
+Exec=flatpak run --command=damask app.drey.Damask --background
+X-Flatpak=app.drey.Damask
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+AUTOSTART_EOF
+
+echo "✓ Damask autostart configured"
+
 # Create welcome notification
 echo "Creating welcome notification..."
 cat > "$HOME/.config/autostart/homeos-welcome.desktop" << 'WELCOME_EOF'
