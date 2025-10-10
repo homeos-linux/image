@@ -5,7 +5,33 @@ set -ouex pipefail
 
 echo "=== Copying core files ==="
 
-# Copy core configuration files to the target system
+# Copy core files to the target system
 cp /ctx/core/scripts/homeos-update /usr/bin/homeos-update
 chmod +x /usr/bin/homeos-update
 echo "✓ homeos-update script copied and made executable"
+
+cp /ctx/core/scripts/homeos-update-gui /usr/bin/homeos-update-gui
+chmod +x /usr/bin/homeos-update-gui
+echo "✓ homeos-update-gui script copied and made executable"
+
+cat > /usr/share/applications/homeos-update-gui.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=homeOS Update
+Name[de]=homeOS Aktualisierung
+Name[es]=Actualización de homeOS
+Name[fr]=Mise à jour de homeOS
+Name[it]=Aggiornamento di homeOS
+Name[ja]=homeOS アップデート
+Name[ko]=homeOS 업데이트
+Name[pt]=Atualização do homeOS
+Name[ru]=Обновление homeOS
+Name[zh_CN]=homeOS 更新
+Comment=Check for and install system updates
+Exec=/usr/bin/homeos-update-gui
+Icon=system-software-update
+Terminal=false
+Categories=System;Settings;
+StartupNotify=true
+EOF
+echo "✓ homeos-update-gui desktop entry created"

@@ -1,0 +1,72 @@
+#!/usr/bin/bash
+
+if [[ "${LANG:0:2}" == "de" ]]; then
+    TXT_INFO="Info"
+    TXT_ERROR="Fehler"
+    TXT_UPDATES_RUNNING="Automatische Updates laufen gerade. Log anzeigen?"
+    TXT_START_SYSTEM_UPGRADE="Starte System-Upgrade..."
+    TXT_UPDATE_SYSTEM_FLATPAKS="Aktualisiere System-Flatpaks..."
+    TXT_UPDATE_USER_FLATPAKS="Aktualisiere Benutzer-Flatpaks..."
+    TXT_UPDATE_BREW="Aktualisiere Brew-Pakete..."
+    TXT_UPDATE_DONE="Update abgeschlossen!"
+else
+    TXT_INFO="Info"
+    TXT_ERROR="Error"
+    TXT_UPDATES_RUNNING="Automatic updates are currently running. Show logs?"
+    TXT_START_SYSTEM_UPGRADE="Starting system upgrade..."
+    TXT_UPDATE_SYSTEM_FLATPAKS="Updating system Flatpaks..."
+    TXT_UPDATE_USER_FLATPAKS="Updating user Flatpaks..."
+    TXT_UPDATE_BREW="Updating Brew packages..."
+    TXT_UPDATE_DONE="Update completed!"
+fi
+
+function info() {
+    zenity --info --text="$1" --width=400 --title="$TXT_INFO"
+}
+
+function error() {
+    zenity --error --text="$1" --width=400 --title="$TXT_ERROR"
+}
+
+# Prüfen, welcher Service aktiv ist
+if systemctl cat -- uupd.timer &> /dev/null; then
+    SERVICE="uupd.service"
+else
+    SERVICE="rpm-ostreed-automatic.service"
+fi
+
+if systemctl is-active --quiet "$SERVICE"; then
+    zenity --question --text="$TXT_UPDATES_RUNNING" --width=400
+    if [[ $? -eq 0 ]]; then
+        x-terminal-emulator -e "journalctl -fexu $SERVICE"
+    fi
+    exit 1
+fi
+
+(
+    echo "10" ; sleep 0.5
+    echo "# $TXT_START_SYSTEM_UPGRADE"
+    rpm-ostree upgrade
+    echo "50" ; sleep 0.5
+
+    if flatpak remotes | grep -q system; then
+        echo "# $TXT_UPDATE_SYSTEM_FLATPAKS"
+        flatpak update -y
+    fi
+    echo "75" ; sleep 0.5
+
+    if flatpak remotes | grep -q user; then
+        echo "# $TXT_UPDATE_USER_FLATPAKS"
+        flatpak update --user -y
+    fi
+    echo "90" ; sleep 0.5
+
+    if [[ -O /var/home/linuxbrew/.linuxbrew/bin/brew ]]; then
+        echo "# $TXT_UPDATE_BREW"
+        /var/home/linuxbrew/.linuxbrew/bin/brew upgrade
+    fi
+
+    echo "100" ; sleep 0.5
+) | zenity --progress --title="$TXT_INFO" --auto-close --width=400
+
+info "$TXT_UPDATE_DONE"
