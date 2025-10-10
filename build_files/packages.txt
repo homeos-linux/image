@@ -4,7 +4,6 @@ gnome-control-center
 gnome-session
 gnome-settings-daemon
 gnome-keyring
-gnome-terminal
 nautilus
 
 # Core homeOS Applications

@@ -40,3 +40,4 @@ org.mozilla.firefox
 
 # Container Management
 io.github.ldelossa.Distroshelf
+app.devsuite.Ptyxis
