@@ -19,12 +19,6 @@ disable = [
   "org.fedoraproject.Anaconda.Modules.Timezone"
 ]
 
-# homeOS Branding
-[customizations.installer.unattended]
-# Automated installation with homeOS defaults
-profile = "desktop"
-
 [customizations.installer]
-# Add homeOS specific configuration
 product = "homeOS"
 variant = "Genesis"
