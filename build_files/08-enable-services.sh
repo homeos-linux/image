@@ -22,16 +22,6 @@ echo "✓ NetworkManager services enabled"
 systemctl enable bluetooth.service
 echo "✓ Bluetooth service enabled"
 
-# Audio services
-systemctl enable pipewire.service
-systemctl enable pipewire-pulse.service
-systemctl enable wireplumber.service
-echo "✓ Audio services (PipeWire) enabled"
-
-# Power management
-systemctl enable power-profiles-daemon.service
-echo "✓ Power profiles daemon enabled"
-
 # Firmware updates
 systemctl enable fwupd.service
 echo "✓ Firmware update daemon enabled"

@@ -39,5 +39,6 @@ org.libreoffice.LibreOffice
 org.mozilla.firefox
 
 # Container Management
-io.github.ldelossa.Distroshelf
+com.ranfdev.DistroShelf
 app.devsuite.Ptyxis
+io.missioncenter.MissionCenter

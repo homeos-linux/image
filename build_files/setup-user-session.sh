@@ -107,6 +107,29 @@ gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folder
 
 echo "✓ LibreOffice applications organized into folder"
 
+# Set up custom GNOME keybindings
+echo "Configuring custom GNOME shortcuts..."
+
+# Close windows with Super-Q
+gsettings set org.gnome.desktop.wm.keybindings close "['<Super>q']"
+
+# Enable fullscreen with Super-F
+gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Super>f']"
+
+# Launch MissionCenter with Shift-Super-M
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "MissionCenter"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "io.missioncenter.MissionCenter"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<Shift><Super>m"
+
+# Open home folder with Super-E
+gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
+
+# Start default browser with Super-B
+gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"
+
+echo "✓ Custom keybindings configured"
+
 # Set up container environment for user
 echo "Setting up container environment..."
 /usr/local/bin/homeos-container-session-setup
