@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 if [[ "${LANG:0:2}" == "de" ]]; then
-    TXT_INFO="Info"
+    TXT_INFO="Aktualisierung"
     TXT_ERROR="Fehler"
     TXT_UPDATES_RUNNING="Automatische Updates laufen gerade. Log anzeigen?"
     TXT_START_SYSTEM_UPGRADE="Starte System-Upgrade..."
@@ -10,7 +10,7 @@ if [[ "${LANG:0:2}" == "de" ]]; then
     TXT_UPDATE_BREW="Aktualisiere Brew-Pakete..."
     TXT_UPDATE_DONE="Update abgeschlossen!"
 else
-    TXT_INFO="Info"
+    TXT_INFO="Updates"
     TXT_ERROR="Error"
     TXT_UPDATES_RUNNING="Automatic updates are currently running. Show logs?"
     TXT_START_SYSTEM_UPGRADE="Starting system upgrade..."
