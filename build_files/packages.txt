@@ -64,11 +64,11 @@ libva-intel-driver
 intel-media-driver
 
 # Fonts
-google-noto-fonts
-google-noto-color-emoji-fonts
+google-noto-emoji-fonts
 google-noto-sans-fonts
+google-noto-sans-cjk-fonts
 google-noto-serif-fonts
-liberation-fonts
+liberation-fonts-all
 dejavu-sans-fonts
 dejavu-serif-fonts
 dejavu-sans-mono-fonts
@@ -85,7 +85,7 @@ nmap
 traceroute
 
 # Additional Utilities (Command Line Only)
-neofetch
+fastfetch
 lshw
 inxi
 speedtest-cli
