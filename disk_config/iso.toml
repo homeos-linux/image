@@ -18,7 +18,3 @@ disable = [
   "org.fedoraproject.Anaconda.Modules.Subscription",
   "org.fedoraproject.Anaconda.Modules.Timezone"
 ]
-
-[image]
-name = "ghcr.io/homeos-linux/image:stable"
-distro = "fedora-42"
