@@ -2,23 +2,37 @@
 
 set -ouex pipefail
 
-### Install packages
+echo "Starting custom image build process..."
+echo "=========================================="
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
+# Step 1: Setup RPM repositories
+echo ""
+/ctx/01-setup-repos.sh
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
+# Step 2: Install RPM packages
+echo ""
+/ctx/02-install-packages.sh
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+# Step 3: Setup multimedia codecs
+echo ""
+/ctx/03-setup-multimedia.sh
 
-#### Example for enabling a System Unit File
+# Step 4: Setup Flatpak
+echo ""
+/ctx/04-setup-flatpak.sh
 
-systemctl enable podman.socket
+# Step 5: Install Flatpak applications
+echo ""
+/ctx/05-install-flatpaks.sh
+
+# Step 6: Setup OS identity
+echo ""
+/ctx/06-setup-os-identity.sh
+
+# Step 7: Setup automatic updates
+echo ""
+/ctx/07-setup-auto-updates.sh
+
+echo ""
+echo "=========================================="
+echo "✓ Custom image build process complete!"

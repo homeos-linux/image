@@ -1,0 +1,29 @@
+# Flatpak Applications to Install
+# 
+# This file contains a list of Flatpak applications to install during the build process.
+# Uncomment the lines for applications you want to include in your image.
+# You can find more applications at: https://flathub.org/
+#
+# Format: one application ID per line
+# Lines starting with # are comments and will be ignored
+
+org.gnome.SystemMonitor
+org.gnome.Calculator
+org.gnome.TextEditor
+org.gnome.Calendar
+org.gnome.Contacts
+org.gnome.Weather
+org.gnome.clocks
+org.gnome.Maps
+org.gnome.Photos
+org.gnome.Music
+org.gnome.Evince
+org.gnome.eog
+org.gnome.Totem
+org.gnome.font-viewer
+org.gnome.DiskUtility
+org.gnome.Logs
+org.mozilla.firefox
+org.libreoffice.LibreOffice
+
+com.mattjakeman.ExtensionManager

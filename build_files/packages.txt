@@ -1,0 +1,87 @@
+# Core GNOME Desktop Environment (System Components Only)
+gnome-shell
+gnome-control-center
+gnome-session
+gnome-settings-daemon
+gnome-keyring
+gnome-terminal
+nautilus
+gnome-software
+
+# Core homeOS Applications
+demonhide
+
+# GNOME Extensions and Customization
+gnome-tweaks 
+gnome-extensions-app 
+gnome-shell-extension-dash-to-dock 
+gnome-shell-extension-user-theme
+gnome-shell-extension-appindicator
+gnome-shell-extension-background-logo
+gnome-shell-extension-launch-new-instance
+gnome-shell-extension-places-menu
+gnome-shell-extension-window-list
+
+# Development Tools (Command Line Only)
+git
+vim
+nano
+curl
+wget
+htop
+tree
+unzip
+zip
+tar
+rsync
+tmux
+screen
+
+# System Utilities
+flatpak
+NetworkManager-wifi
+NetworkManager-bluetooth
+bluez
+pulseaudio
+pipewire
+wireplumber
+gstreamer1-plugins-good
+gstreamer1-plugins-bad-free
+gstreamer1-plugins-ugly-free
+
+# Media Codecs and Support
+ffmpeg
+mesa-dri-drivers
+mesa-vulkan-drivers
+libva
+libva-intel-driver
+intel-media-driver
+
+# Fonts
+google-noto-fonts
+google-noto-color-emoji-fonts
+google-noto-sans-fonts
+google-noto-serif-fonts
+liberation-fonts
+dejavu-sans-fonts
+dejavu-serif-fonts
+dejavu-sans-mono-fonts
+
+# Archive Support
+p7zip
+p7zip-plugins
+unrar
+
+# Network Tools
+openssh-clients
+telnet
+nmap
+traceroute
+
+# Additional Utilities (Command Line Only)
+neofetch
+lshw
+inxi
+speedtest-cli
+yt-dlp
+android-tools
