@@ -11,7 +11,6 @@ echo "Creating first-login setup script..."
 
 mkdir -p /etc/skel/.config/autostart
 mkdir -p /etc/skel/.local/share/applications
-mkdir -p /usr/local/bin
 
 # Create the first-login setup script
 cat > /usr/local/bin/homeos-first-login-setup << 'EOF'

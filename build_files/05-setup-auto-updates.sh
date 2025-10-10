@@ -84,8 +84,6 @@ DefaultMemoryPressureLimit=80%
 EOF
 
 # Create update notification script (optional)
-mkdir -p /usr/local/bin
-
 cat > /usr/local/bin/update-notification << 'EOF'
 #!/bin/bash
 # Simple update notification for homeOS

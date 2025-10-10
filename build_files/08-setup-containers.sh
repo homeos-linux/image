@@ -63,8 +63,6 @@ EOF
 echo "✓ Distrobox configuration created"
 
 # Create helpful container management scripts
-mkdir -p /usr/local/bin
-
 # Create a script to set up common development containers
 cat > /usr/local/bin/homeos-setup-containers << 'EOF'
 #!/bin/bash
