@@ -130,30 +130,6 @@ The [Containerfile](./Containerfile) defines the operations used to customize th
 
 The [build.sh](./build_files/build.sh) file is called from your Containerfile. It is the best place to install new packages or make any other customization to your system. There are customization examples contained within it for your perusal.
 
-### Flatpak Support
-
-This template now includes built-in Flatpak support for installing applications during the build process:
-
-- **Automatic setup**: Flatpak and Flathub repository are configured automatically
-- **Easy management**: Edit `build_files/flatpaks.txt` to specify which applications to install
-- **Runtime included**: Required Flatpak runtimes are installed automatically
-
-**To add Flatpaks to your image:**
-1. Edit `build_files/flatpaks.txt`
-2. Uncomment or add application IDs (one per line)
-3. Rebuild your image
-
-**Example `flatpaks.txt` entry:**
-```
-# Web browser
-org.mozilla.firefox
-
-# Office suite  
-org.libreoffice.LibreOffice
-```
-
-Find more applications at [Flathub.org](https://flathub.org/). See `build_files/README.md` for detailed documentation.
-
 ## build.yml
 
 The [build.yml](./.github/workflows/build.yml) Github Actions workflow creates your custom OCI image and publishes it to the Github Container Registry (GHCR). By default, the image name will match the Github repository name. There are several environment variables at the start of the workflow which may be of interest to change.
