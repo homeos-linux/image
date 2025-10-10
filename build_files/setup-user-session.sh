@@ -27,8 +27,16 @@ VERSION_FILE="$HOME/.config/homeos-first-login-version"
 echo "Installing Flatpak applications..."
 
 # Read Flatpak list from flatpaks.txt file
-FLATPAKS_FILE="/ctx/flatpaks.txt"
+FLATPAKS_FILE="/etc/homeos/flatpaks.txt"
 
+# Add Flathub repository for user
+echo "Adding Flathub repository..."
+flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+# Adding launcher.moe repository for user
+flatpak remote-add --if-not-exists --user launcher.moe https://gol.launcher.moe/gol.launcher.moe.flatpakrepo
+
+# Install Flatpaks from the list
 if [ -f "$FLATPAKS_FILE" ]; then
     echo "Reading Flatpaks from $FLATPAKS_FILE..."
     # Read non-empty, non-comment lines from the file

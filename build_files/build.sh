@@ -17,37 +17,33 @@ echo ""
 echo ""
 /ctx/03-setup-multimedia.sh
 
-# Step 4: Setup Flatpak
+# Step 4: Setup OS identity
 echo ""
-/ctx/04-setup-flatpak.sh
+/ctx/04-setup-os-identity.sh
 
-# Step 5: Setup OS identity
+# Step 5: Setup automatic updates
 echo ""
-/ctx/05-setup-os-identity.sh
+/ctx/05-setup-auto-updates.sh
 
-# Step 6: Setup automatic updates
+# Step 6: Enable system services
 echo ""
-/ctx/06-setup-auto-updates.sh
+/ctx/06-enable-services.sh
 
-# Step 7: Enable system services
+# Step 7: Setup Bazaar configuration
 echo ""
-/ctx/07-enable-services.sh
+/ctx/07-setup-bazaar.sh
 
-# Step 8: Setup Bazaar configuration
+# Step 8: Setup container support (Distrobox)
 echo ""
-/ctx/08-setup-bazaar.sh
+/ctx/08-setup-containers.sh
 
-# Step 9: Setup container support (Distrobox)
+# Step 9: Setup Anaconda installer customizations
 echo ""
-/ctx/09-setup-containers.sh
+/ctx/09-setup-anaconda.sh
 
-# Step 10: Setup Anaconda installer customizations
+# Step 10: Copy core files
 echo ""
-/ctx/10-setup-anaconda.sh
-
-# Step 11: Copy core files
-echo ""
-/ctx/11-copy-core-files.sh
+/ctx/10-copy-core-files.sh
 
 # Setup user session (special script - not numbered)
 echo ""
