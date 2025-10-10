@@ -91,7 +91,7 @@ cat > /usr/share/applications/homeos-docker-setup.desktop << 'EOF'
 Name=Docker Setup
 Comment=Set up Docker access for your user account
 GenericName=Container Setup
-Exec=/usr/local/bin/homeos-docker-setup-gui
+Exec=/usr/bin/homeos-docker-setup-gui
 Icon=docker
 Terminal=false
 Type=Application

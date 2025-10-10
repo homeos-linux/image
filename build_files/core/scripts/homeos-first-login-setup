@@ -1,0 +1,176 @@
+#!/bin/bash
+# homeOS first login setup script
+# This script runs automatically on first user login and when configuration updates
+
+# Script version - increment when adding new features
+SCRIPT_VERSION="1.1.0"
+VERSION_FILE="$HOME/.config/homeos-first-login-version"
+
+# Check current version
+CURRENT_VERSION=""
+if [ -f "$VERSION_FILE" ]; then
+    CURRENT_VERSION=$(cat "$VERSION_FILE")
+fi
+
+# Skip if already run with same or newer version
+if [ "$CURRENT_VERSION" = "$SCRIPT_VERSION" ]; then
+    exit 0
+fi
+
+echo "Setting up homeOS user session (version $SCRIPT_VERSION)..."
+
+# Show what's being updated if this is an upgrade
+if [ -n "$CURRENT_VERSION" ] && [ "$CURRENT_VERSION" != "$SCRIPT_VERSION" ]; then
+    echo "Upgrading homeOS user configuration from $CURRENT_VERSION to $SCRIPT_VERSION"
+fi
+
+# Enable GNOME Shell extensions
+echo "Enabling GNOME Shell extensions..."
+
+# Enable extensions using gsettings
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
+gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
+gsettings set org.gnome.shell.extensions.dash-to-dock intellihide true
+
+# Enable user-theme extension
+gsettings set org.gnome.shell.extensions.user-theme name ""
+
+# Configure GNOME settings
+echo "Configuring GNOME settings..."
+
+# Set up favorite apps in dock
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.mozilla.firefox.desktop', 'io.github.kolunmi.Bazaar.desktop']"
+
+# Configure interface settings
+gsettings set org.gnome.desktop.interface clock-show-weekday true
+gsettings set org.gnome.desktop.interface show-battery-percentage true
+gsettings set org.gnome.desktop.interface enable-hot-corners false
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+
+# Configure window management
+gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close"
+gsettings set org.gnome.desktop.wm.preferences focus-mode 'click'
+
+# Configure file manager
+gsettings set org.gnome.nautilus.preferences show-hidden-files false
+gsettings set org.gnome.nautilus.preferences show-image-thumbnails 'always'
+
+# Set up wallpaper (if custom wallpaper exists)
+if [ -f "/usr/share/backgrounds/homeos-default.jpg" ]; then
+    gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/homeos-default.jpg"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/homeos-default.jpg"
+fi
+
+# Configure power settings
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 3600
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 1800
+
+# Set up automatic screen lock
+gsettings set org.gnome.desktop.screensaver lock-enabled true
+gsettings set org.gnome.desktop.screensaver lock-delay 300
+
+# Configure privacy settings
+gsettings set org.gnome.desktop.privacy report-technical-problems false
+gsettings set org.gnome.desktop.privacy send-software-usage-stats false
+
+echo "✓ GNOME configuration complete"
+
+# Organize LibreOffice applications into a folder
+echo "Organizing LibreOffice applications..."
+mkdir -p "$HOME/.local/share/applications"
+
+# Create LibreOffice folder using gsettings
+gsettings set org.gnome.desktop.app-folders folder-children "['Utilities', 'YaST', 'LibreOffice']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ name 'LibreOffice'
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ categories "['Office']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ apps "['org.libreoffice.LibreOffice.desktop', 'org.libreoffice.LibreOffice-writer.desktop', 'org.libreoffice.LibreOffice-calc.desktop', 'org.libreoffice.LibreOffice-impress.desktop', 'org.libreoffice.LibreOffice-draw.desktop', 'org.libreoffice.LibreOffice-base.desktop', 'org.libreoffice.LibreOffice-math.desktop', 'org.libreoffice.LibreOffice-startcenter.desktop']"
+
+echo "✓ LibreOffice applications organized into folder"
+
+# Set up custom GNOME keybindings
+echo "Configuring custom GNOME shortcuts..."
+
+# Close windows with Super-Q
+gsettings set org.gnome.desktop.wm.keybindings close "['<Super>q']"
+
+# Enable fullscreen with Super-F
+gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Super>f']"
+
+# Launch MissionCenter with Shift-Super-M
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "MissionCenter"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "io.missioncenter.MissionCenter"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<Shift><Super>m"
+
+# Open home folder with Super-E
+gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
+
+# Start default browser with Super-B
+gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"
+
+echo "✓ Custom keybindings configured"
+
+# Set up container environment for user
+echo "Setting up container environment..."
+/usr/local/bin/homeos-container-session-setup
+echo "✓ Container environment configured"
+
+# Set up demonhide autostart
+echo "Setting up demonhide autostart..."
+cat > "$HOME/.config/autostart/demonhide.desktop" << 'AUTOSTART_EOF'
+[Desktop Entry]
+Type=Application
+Name=DemonHide
+Comment=Hide system tray applications
+Exec=demonhide
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+AUTOSTART_EOF
+
+echo "✓ DemonHide autostart configured"
+
+# Set up Damask autostart
+echo "Setting up Damask autostart..."
+cat > "$HOME/.config/autostart/damask.desktop" << 'AUTOSTART_EOF'
+[Desktop Entry]
+Type=Application
+Name=app.drey.Damask
+X-XDP-Autostart=app.drey.Damask
+Exec=flatpak run --command=damask app.drey.Damask --background
+X-Flatpak=app.drey.Damask
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+AUTOSTART_EOF
+
+echo "✓ Damask autostart configured"
+
+# Create welcome notification
+echo "Creating welcome notification..."
+cat > "$HOME/.config/autostart/homeos-welcome.desktop" << 'WELCOME_EOF'
+[Desktop Entry]
+Type=Application
+Name=homeOS Welcome
+Comment=Show welcome message
+Exec=/usr/local/bin/homeos-welcome-notification
+Hidden=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+WELCOME_EOF
+
+# Mark setup as complete with version
+mkdir -p "$HOME/.config"
+echo "$SCRIPT_VERSION" > "$VERSION_FILE"
+echo "✓ homeOS user setup complete (version $SCRIPT_VERSION)"
+
+# Show welcome notification (only on first install, not upgrades)
+if [ -z "$CURRENT_VERSION" ] && command -v notify-send &> /dev/null; then
+    notify-send "Welcome to homeOS!" "Your desktop has been configured. Enjoy your new system!" --icon=dialog-information
+fi
