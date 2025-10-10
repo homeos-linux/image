@@ -84,6 +84,7 @@ DefaultMemoryPressureLimit=80%
 EOF
 
 # Create update notification script (optional)
+touch /usr/local/bin/update-notification
 cat > /usr/local/bin/update-notification << 'EOF'
 #!/bin/bash
 # Simple update notification for homeOS
@@ -131,6 +132,7 @@ EOF
 fi
 
 # Create a simple update status script
+touch /usr/local/bin/homeos-update-status
 cat > /usr/local/bin/homeos-update-status << 'EOF'
 #!/bin/bash
 # Show update status for homeOS

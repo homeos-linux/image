@@ -13,6 +13,7 @@ mkdir -p /etc/skel/.config/autostart
 mkdir -p /etc/skel/.local/share/applications
 
 # Create the first-login setup script
+touch /usr/local/bin/homeos-first-login-setup
 cat > /usr/local/bin/homeos-first-login-setup << 'EOF'
 #!/bin/bash
 # homeOS first login setup script
@@ -195,6 +196,7 @@ EOF
 chmod +x /usr/local/bin/homeos-first-login-setup
 
 # Create welcome notification script
+touch /usr/local/bin/homeos-welcome-notification
 cat > /usr/local/bin/homeos-welcome-notification << 'EOF'
 #!/bin/bash
 # Welcome notification for homeOS

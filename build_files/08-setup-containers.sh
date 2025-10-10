@@ -64,6 +64,7 @@ echo "✓ Distrobox configuration created"
 
 # Create helpful container management scripts
 # Create a script to set up common development containers
+touch /usr/local/bin/homeos-setup-containers
 cat > /usr/local/bin/homeos-setup-containers << 'EOF'
 #!/bin/bash
 # homeOS Container Setup Script
@@ -77,17 +78,17 @@ show_help() {
     echo "Usage: $0 [COMMAND]"
     echo ""
     echo "Commands:"
-    echo "  ubuntu      Create Ubuntu development container"
+    echo "  ubuntu      Create Ubuntu container"
     echo "  arch        Create Arch Linux container"
-    echo "  debian      Create Debian stable container"
-    echo "  fedora      Create Fedora latest container"
+    echo "  debian      Create Debian container"
+    echo "  fedora      Create Fedora container"
     echo "  docker-test Test Docker installation"
     echo "  list        List available containers"
     echo "  help        Show this help message"
 }
 
 setup_ubuntu() {
-    echo "Setting up Ubuntu development container..."
+    echo "Setting up Ubuntu container..."
     distrobox create --name ubuntu --image ubuntu:latest
     distrobox enter ubuntu -- sudo apt update
     distrobox enter ubuntu -- sudo apt install -y build-essential git curl wget vim nano
@@ -103,7 +104,7 @@ setup_arch() {
 }
 
 setup_debian() {
-    echo "Setting up Debian stable container..."
+    echo "Setting up Debian container..."
     distrobox create --name debian --image debian:stable
     distrobox enter debian -- sudo apt update
     distrobox enter debian -- sudo apt install -y build-essential git curl wget vim nano
@@ -111,7 +112,7 @@ setup_debian() {
 }
 
 setup_fedora() {
-    echo "Setting up Fedora development container..."
+    echo "Setting up Fedora container..."
     distrobox create --name fedora --image fedora:latest
     distrobox enter fedora -- sudo dnf update -y
     distrobox enter fedora -- sudo dnf install -y @development-tools git curl wget vim nano
@@ -206,6 +207,7 @@ NoDisplay=false
 EOF
 
 # Create GUI setup script for Docker
+touch /usr/local/bin/homeos-docker-setup-gui
 cat > /usr/local/bin/homeos-docker-setup-gui << 'EOF'
 #!/bin/bash
 # GUI Docker setup script using pkexec
@@ -241,6 +243,7 @@ chmod +x /usr/local/bin/homeos-docker-setup-gui
 echo "Configuring user session integration..."
 
 # Create a script that runs on user login to set up container environment
+touch /usr/local/bin/homeos-container-session-setup
 cat > /usr/local/bin/homeos-container-session-setup << 'EOF'
 #!/bin/bash
 # Set up container environment for user session
