@@ -1,0 +1,222 @@
+# homeOS Curated Applications for Bazaar
+# This configuration creates a beautiful, branded experience for homeOS users
+
+css: |
+  /* homeOS Brand Colors and Styling */
+  .homeos-section {
+    margin: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .homeos-section banner-text {
+    margin: 20px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Essential Apps Section - Warm homeOS gradient */
+  .homeos-essential {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+  
+  .homeos-essential title {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 10px;
+  }
+  
+  .homeos-essential app-tile > button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .homeos-essential app-tile > button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Productivity Section - Professional blue gradient */
+  .homeos-productivity {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+  }
+  
+  .homeos-productivity title {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 10px;
+  }
+  
+  .homeos-productivity app-tile > button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .homeos-productivity app-tile > button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  /* Creative Section - Vibrant creative gradient */
+  .homeos-creative {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: white;
+  }
+  
+  .homeos-creative title {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 10px;
+  }
+  
+  .homeos-creative app-tile > button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .homeos-creative app-tile > button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  /* Gaming Section - Dark gaming aesthetic */
+  .homeos-gaming {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+  }
+  
+  .homeos-gaming title {
+    border-bottom: 3px solid #e74c3c;
+    padding-bottom: 10px;
+  }
+  
+  .homeos-gaming app-tile > button {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .homeos-gaming app-tile > button:hover {
+    background-color: rgba(231, 76, 60, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  /* Development Section - Tech-focused gradient */
+  .homeos-development {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+  
+  .homeos-development title {
+    border-bottom: 3px solid #2ecc71;
+    padding-bottom: 10px;
+  }
+  
+  .homeos-development app-tile > button {
+    background-color: rgba(46, 204, 113, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .homeos-development app-tile > button:hover {
+    background-color: rgba(46, 204, 113, 0.2);
+    transform: translateY(-2px);
+  }
+
+sections:
+  - title: "🏠 Essential homeOS Apps"
+    subtitle: "Core applications every homeOS user needs"
+    banner-text-halign: center
+    banner-text-valign: center
+    banner-text-label-xalign: 0.5
+    classes:
+      - homeos-section
+      - homeos-essential
+    appids:
+      - org.mozilla.firefox
+      - org.gnome.Nautilus
+      - org.gnome.Terminal
+      - org.gnome.TextEditor
+      - org.gnome.Calculator
+      - org.gnome.SystemMonitor
+      - org.gnome.Extensions
+      - com.mattjakeman.ExtensionManager
+
+  - title: "💼 Productivity & Office"
+    subtitle: "Get work done efficiently with these powerful tools"
+    banner-text-halign: center
+    banner-text-valign: center
+    banner-text-label-xalign: 0.5
+    classes:
+      - homeos-section
+      - homeos-productivity
+    appids:
+      - org.libreoffice.LibreOffice
+      - org.gnome.Calendar
+      - org.gnome.Contacts
+      - org.gnome.Evolution
+      - org.gnome.World.PikaBackup
+      - md.obsidian.Obsidian
+      - org.standardnotes.standardnotes
+      - com.github.jeromerobert.pdfarranger
+
+  - title: "🎨 Creative & Media"
+    subtitle: "Express your creativity with professional tools"
+    banner-text-halign: center
+    banner-text-valign: center
+    banner-text-label-xalign: 0.5
+    classes:
+      - homeos-section
+      - homeos-creative
+    appids:
+      - org.gimp.GIMP
+      - org.inkscape.Inkscape
+      - org.blender.Blender
+      - org.kde.kdenlive
+      - org.audacityteam.Audacity
+      - org.videolan.VLC
+      - org.gnome.Photos
+      - org.gnome.Music
+      - com.spotify.Client
+      - org.darktable.Darktable
+
+  - title: "🎮 Gaming & Entertainment"
+    subtitle: "Relax and have fun with these entertainment options"
+    banner-text-halign: center
+    banner-text-valign: center
+    banner-text-label-xalign: 0.5
+    classes:
+      - homeos-section
+      - homeos-gaming
+    appids:
+      - com.valvesoftware.Steam
+      - net.lutris.Lutris
+      - org.prismlauncher.PrismLauncher
+      - org.libretro.RetroArch
+      - io.mgba.mGBA
+      - org.duckstation.DuckStation
+      - net.pcsx2.PCSX2
+      - org.ppsspp.PPSSPP
+
+  - title: "💻 Development Tools"
+    subtitle: "Code, build, and deploy with these developer favorites"
+    banner-text-halign: center
+    banner-text-valign: center
+    banner-text-label-xalign: 0.5
+    classes:
+      - homeos-section
+      - homeos-development
+    appids:
+      - org.gnome.Builder
+      - org.gnome.gitg
+      - io.github.shiftey.Desktop
+      - com.github.gi_lom.dialect
+      - org.gnome.design.Palette
+      - org.gnome.design.IconLibrary
+      - re.sonny.Workbench
+      - com.github.huluti.Curtail

@@ -6,7 +6,6 @@ gnome-settings-daemon
 gnome-keyring
 gnome-terminal
 nautilus
-gnome-software
 
 # Core homeOS Applications
 demonhide

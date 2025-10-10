@@ -33,6 +33,18 @@ echo ""
 echo ""
 /ctx/07-setup-auto-updates.sh
 
+# Step 8: Enable system services
+echo ""
+/ctx/08-enable-services.sh
+
+# Step 9: Setup Bazaar configuration
+echo ""
+/ctx/09-setup-bazaar.sh
+
+# Setup user session (special script - not numbered)
+echo ""
+/ctx/setup-user-session.sh
+
 echo ""
 echo "=========================================="
 echo "✓ Custom image build process complete!"

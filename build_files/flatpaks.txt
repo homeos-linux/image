@@ -23,6 +23,11 @@ org.gnome.Totem
 org.gnome.font-viewer
 org.gnome.DiskUtility
 org.gnome.Logs
+
+# Software Management
+io.github.kolunmi.Bazaar
+
+# Web Browsers
 org.mozilla.firefox
 org.libreoffice.LibreOffice
 
