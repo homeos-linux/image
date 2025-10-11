@@ -14,12 +14,14 @@ if [ -f "$VERSION_FILE" ]; then
 fi
 
 # Show zenity info screen in German or English
+ZENITY_PID=""
 if command -v zenity &> /dev/null; then
     if [ "$LANG_CODE" = "de" ]; then
-        zenity --info --width=400 --title="homeOS Einrichtung" --text="Bitte warten Sie während wir Ihr System konfigurieren..." &
+        (zenity --progress --pulsate --no-cancel --auto-close --width=400 --title="homeOS Einrichtung" --text="Bitte warten Sie während wir Ihr System konfigurieren..." &) &
     else
-        zenity --info --width=400 --title="homeOS Setup" --text="Please wait while we configure your system..." &
+        (zenity --progress --pulsate --no-cancel --auto-close --width=400 --title="homeOS Setup" --text="Please wait while we configure your system..." &) &
     fi
+    ZENITY_PID=$!
 fi
 
 # Check if Internet is available
@@ -195,9 +197,15 @@ AUTOSTART_EOF
 echo "✓ Damask autostart configured"
 
 # Mark setup as complete with version
+
 mkdir -p "$HOME/.config"
 echo "$SCRIPT_VERSION" > "$VERSION_FILE"
 echo "✓ homeOS user setup complete (version $SCRIPT_VERSION)"
+
+# Close zenity spinner if running
+if [ -n "$ZENITY_PID" ] && kill -0 "$ZENITY_PID" 2>/dev/null; then
+    kill "$ZENITY_PID" 2>/dev/null
+fi
 
 # Show welcome notification (only on first install, not upgrades)
 if [ -z "$CURRENT_VERSION" ] && command -v notify-send &> /dev/null; then
