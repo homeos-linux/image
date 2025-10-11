@@ -62,6 +62,26 @@ else
     echo "You can create this file to specify Flatpaks to install"
 fi
 
+# Rename Bazaar to "App Store" in menu
+APP_ID="io.github.kolunmi.Bazaar"
+NEW_NAME="App Store"
+
+USER_DESKTOP_DIR="$HOME/.local/share/applications"
+SYSTEM_DESKTOP_DIR="/var/lib/flatpak/exports/share/applications"
+
+SRC_FILE="$SYSTEM_DESKTOP_DIR/$APP_ID.desktop"
+DEST_FILE="$USER_DESKTOP_DIR/$APP_ID.desktop"
+
+mkdir -p "$USER_DESKTOP_DIR"
+
+if [ -f "$SRC_FILE" ]; then
+    cp "$SRC_FILE" "$DEST_FILE"
+    sed -i "s/^Name=.*/Name=$NEW_NAME/" "$DEST_FILE"
+    echo "✅ $APP_ID menu name changed to: $NEW_NAME"
+else
+    echo "❌ Desktop file for $APP_ID not found!"
+fi
+
 # Enable GNOME Shell extensions
 echo "Enabling GNOME Shell extensions..."
 
@@ -79,7 +99,7 @@ gsettings set org.gnome.shell.extensions.user-theme name ""
 echo "Configuring GNOME settings..."
 
 # Set up favorite apps in dock
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.mozilla.firefox.desktop', 'io.github.kolunmi.Bazaar.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.Evolution', 'com.ranfdev.DistroShelf', 'io.github.kolunmi.Bazaar.desktop']"
 
 # Configure interface settings
 gsettings set org.gnome.desktop.interface clock-show-weekday true

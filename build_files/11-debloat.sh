@@ -24,6 +24,7 @@ PACKAGES_TO_REMOVE=(
     "gnome-text-editor"
     "gnome-weather"
     "gnome-web"
+    "gnome-console"
     "eog"
     "evince"
     "totem"

@@ -38,7 +38,7 @@ org.gnome.font-viewer
 org.libreoffice.LibreOffice
 org.mozilla.firefox
 
-# Container Management
 com.ranfdev.DistroShelf
 app.devsuite.Ptyxis
-io.missioncenter.MissionCenter
+net.nokyan.Resources
+org.gnome.Evolution
