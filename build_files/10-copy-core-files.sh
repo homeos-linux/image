@@ -47,5 +47,7 @@ cp /ctx/core/branding/gtk.css /usr/share/gtk-4.0/gtk.css
 echo "✓ GTK theme configured"
 
 # Set up gnome-shell.css
+echo "Setting up GNOME Shell theme..."
+mkdir -p /usr/share/gnome-shell/theme/
 cp /ctx/core/branding/gnome-shell.css /usr/share/gnome-shell/theme/gnome-shell.css
 echo "✓ GNOME Shell theme configured"
