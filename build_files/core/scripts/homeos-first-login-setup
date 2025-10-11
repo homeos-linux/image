@@ -3,7 +3,7 @@
 # This script runs automatically on first user login and when configuration updates
 
 # Script version - increment when adding new features
-SCRIPT_VERSION="0.0.1"
+SCRIPT_VERSION="2"
 VERSION_FILE="$HOME/.config/homeos-first-login-version"
 LANG_CODE=${LANG:0:2}
 
