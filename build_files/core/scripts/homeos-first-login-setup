@@ -69,12 +69,16 @@ flatpak override --user io.github.kolunmi.Bazaar --filesystem=host-etc
 # Enable GNOME Shell extensions
 echo "Enabling GNOME Shell extensions..."
 
-# Enable extensions using gsettings
+# Enable each extension using dconf
+dconf write /org/gnome/shell/enabled-extensions "['app-hider@lynith.dev', 'caffeine@patapon.info', 'AlphabeticalAppGrid@stuarthayhurst', 'dash-to-dock@micxgx.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com', 'hide-cursor@elcste.com', 'panel-corners@aunetx', 'smile-extension@mijorus.it', 'grand-theft-focus@zalckos.github.com', 'blur-my-shell@aunetx', 'add-to-desktop@tommimon.github.com', 'gtk4-ding@smedius.gitlab.com']"
+
+# Configure dash-to-dock extension
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
 gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
 gsettings set org.gnome.shell.extensions.dash-to-dock intellihide true
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 
 # Enable user-theme extension
 gsettings set org.gnome.shell.extensions.user-theme name ""

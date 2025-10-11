@@ -19,6 +19,9 @@ EXTENSIONS=(
     4805
     6096
     5410
+    3193
+    5263
+    3240
 )
 
 # Install each extension
