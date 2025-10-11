@@ -15,7 +15,7 @@ CODE_NAME="Genesis"
 VERSION="${VERSION:-1.0.0}"
 
 # Use environment variables if available, otherwise use defaults
-IMAGE_NAME="${IMAGE_NAME:-homeos}"
+IMAGE_NAME="fedora"
 IMAGE_VENDOR="${IMAGE_VENDOR:-homeos-linux}"
 BASE_IMAGE_NAME="${BASE_IMAGE_NAME:-fedora-bootc}"
 FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-42}"
@@ -53,7 +53,7 @@ EOF
 echo "Updating OS release information..."
 
 # OS Release File - Update system identity
-sed -i "s|^VARIANT_ID=.*|VARIANT_ID=$IMAGE_NAME|" /usr/lib/os-release
+sed -i "s|^ID=.*|ID=$IMAGE_NAME|" /usr/lib/os-release
 sed -i "s|^PRETTY_NAME=.*|PRETTY_NAME=\"${IMAGE_PRETTY_NAME} (Version: ${VERSION})\"|" /usr/lib/os-release
 sed -i "s|^NAME=.*|NAME=\"$IMAGE_PRETTY_NAME\"|" /usr/lib/os-release
 sed -i "s|^HOME_URL=.*|HOME_URL=\"$HOME_URL\"|" /usr/lib/os-release
