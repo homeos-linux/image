@@ -87,7 +87,7 @@ gsettings set org.gnome.shell.extensions.user-theme name ""
 echo "Configuring GNOME settings..."
 
 # Set up favorite apps in dock
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.Evolution', 'com.ranfdev.DistroShelf', 'io.github.kolunmi.Bazaar.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.Evolution.desktop', 'com.ranfdev.DistroShelf.desktop', 'io.github.kolunmi.Bazaar.desktop']"
 
 # Configure interface settings
 gsettings set org.gnome.desktop.interface clock-show-weekday true

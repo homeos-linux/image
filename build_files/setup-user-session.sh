@@ -81,7 +81,7 @@ folder-children=['Utilities', 'YaST', 'LibreOffice']
 
 [org/gnome/desktop/app-folders/folders/LibreOffice]
 name='LibreOffice'
-apps=['org.libreoffice.LibreOffice.desktop', 'org.libreoffice.LibreOffice-writer.desktop', 'org.libreoffice.LibreOffice-calc.desktop', 'org.libreoffice.LibreOffice-impress.desktop', 'org.libreoffice.LibreOffice-draw.desktop', 'org.libreoffice.LibreOffice-base.desktop', 'org.libreoffice.LibreOffice-math.desktop', 'org.libreoffice.LibreOffice-startcenter.desktop']
+apps=['org.libreoffice.LibreOffice.desktop', 'org.libreoffice.LibreOffice.base.desktop', 'org.libreoffice.LibreOffice.calc.desktop', 'org.libreoffice.LibreOffice.draw.desktop', 'org.libreoffice.LibreOffice.impress.desktop', 'org.libreoffice.LibreOffice.math.desktop', 'org.libreoffice.LibreOffice.writer.desktop', 'org.libreoffice.LibreOffice-writer.desktop', 'org.libreoffice.LibreOffice-calc.desktop', 'org.libreoffice.LibreOffice-impress.desktop', 'org.libreoffice.LibreOffice-draw.desktop', 'org.libreoffice.LibreOffice-base.desktop', 'org.libreoffice.LibreOffice-math.desktop', 'org.libreoffice.LibreOffice-startcenter.desktop']
 EOF
 
 # Update dconf database
