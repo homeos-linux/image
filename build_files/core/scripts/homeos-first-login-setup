@@ -5,6 +5,7 @@
 # Script version - increment when adding new features
 SCRIPT_VERSION="1.2.2"
 VERSION_FILE="$HOME/.config/homeos-first-login-version"
+LANG_CODE=${LANG:0:2}
 
 # Check current version
 CURRENT_VERSION=""
@@ -15,6 +16,11 @@ fi
 # Check if Internet is available
 if ! ping -c 1 8.8.8.8 &> /dev/null; then
     echo "⚠ No internet connection detected. Setup cannot continue."
+    if [ "$LANG_CODE" = "de" ]; then
+        notify-send "homeOS Setup" "Keine Internetverbindung erkannt. Bitte verbinden Sie sich mit dem Internet und starten Sie den Computer neu, um die Einrichtung abzuschließen." --icon=dialog-warning
+    else
+        notify-send "homeOS Setup" "No internet connection detected. Please connect to the internet and restart your computer to complete setup." --icon=dialog-warning
+    fi
     exit 1
 fi
 
@@ -178,20 +184,6 @@ AUTOSTART_EOF
 
 echo "✓ Damask autostart configured"
 
-# Create welcome notification
-echo "Creating welcome notification..."
-cat > "$HOME/.config/autostart/homeos-welcome.desktop" << 'WELCOME_EOF'
-[Desktop Entry]
-Type=Application
-Name=homeOS Welcome
-Comment=Show welcome message
-Exec=/usr/local/bin/homeos-welcome-notification
-Hidden=false
-NoDisplay=true
-X-GNOME-Autostart-enabled=true
-StartupNotify=false
-WELCOME_EOF
-
 # Mark setup as complete with version
 mkdir -p "$HOME/.config"
 echo "$SCRIPT_VERSION" > "$VERSION_FILE"
@@ -199,5 +191,10 @@ echo "✓ homeOS user setup complete (version $SCRIPT_VERSION)"
 
 # Show welcome notification (only on first install, not upgrades)
 if [ -z "$CURRENT_VERSION" ] && command -v notify-send &> /dev/null; then
-    notify-send "Welcome to homeOS!" "Your desktop has been configured. Enjoy your new system!" --icon=dialog-information
+    LANG_CODE=${LANG:0:2}  # "de" für Deutsch, "en" für Englisch usw.
+    if [ "$LANG_CODE" = "de" ]; then
+        notify-send "Willkommen bei homeOS!" "Ihr Desktop wurde konfiguriert. Viel Spaß mit Ihrem neuen System!" --icon=dialog-information
+    else
+        notify-send "Welcome to homeOS!" "Your desktop has been configured. Enjoy your new system!" --icon=dialog-information
+    fi
 fi

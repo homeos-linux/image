@@ -15,9 +15,6 @@ mkdir -p /etc/skel/.local/share/applications
 # Create the first-login setup script
 cp /ctx/core/scripts/homeos-first-login-setup /usr/bin/homeos-first-login-setup
 
-# Create welcome notification script
-cp /ctx/core/scripts/homeos-welcome-notification /usr/bin/homeos-welcome-notification
-
 # Create autostart entry in skeleton for new users
 cat > /etc/skel/.config/autostart/homeos-first-login.desktop << 'EOF'
 [Desktop Entry]
