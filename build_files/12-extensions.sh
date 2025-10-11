@@ -28,22 +28,18 @@ mkdir -p "$TMP_DIR"
 for EXT_ID in "${EXTENSIONS[@]}"; do
     echo "Processing extension ID: $EXT_ID"
 
-    # Metadata abrufen
     META_JSON=$(curl -s "https://extensions.gnome.org/extension-info/?pk=$EXT_ID")
     UUID=$(echo $META_JSON | jq -r '.uuid')
     UUID_WITHOUT_AT=$(echo $UUID | tr -d '@')
     VERSION=$(echo $META_JSON | jq -r '.shell_version_map["48"].version')
 
-    # ZIP runterladen
     ZIP_PATH="$TMP_DIR/${UUID}.zip"
     curl -L -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID_WITHOUT_AT.v$VERSION.shell-extension.zip"
 
-    # Entpacken
     EXT_DIR="$EXT_PATH/$UUID"
     mkdir -p "$EXT_DIR"
     unzip -q "$ZIP_PATH" -d "$EXT_DIR"
 
-    # GLib-Schemas kompilieren
     if [ -d "$EXT_DIR/schemas" ]; then
         echo "Compiling schemas for $UUID..."
         glib-compile-schemas "$EXT_DIR/schemas"
