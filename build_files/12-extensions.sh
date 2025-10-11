@@ -36,14 +36,7 @@ for EXT_ID in "${EXTENSIONS[@]}"; do
     ZIP_PATH="$TMP_DIR/${UUID}.zip"
     curl -L -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID_WITHOUT_AT.v$VERSION.shell-extension.zip"
 
-    EXT_DIR="$EXT_PATH/$UUID"
-    mkdir -p "$EXT_DIR"
-    unzip -oq "$ZIP_PATH" -d "$EXT_DIR"
-
-    if [ -d "$EXT_DIR/schemas" ]; then
-        echo "Compiling schemas for $UUID..."
-        glib-compile-schemas "$EXT_DIR/schemas"
-    fi
+    gnome-extensions install -fq "$ZIP_PATH"
 done
 
 # Cleanup
