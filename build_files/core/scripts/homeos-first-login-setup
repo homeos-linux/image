@@ -3,7 +3,7 @@
 # This script runs automatically on first user login and when configuration updates
 
 # Script version - increment when adding new features
-SCRIPT_VERSION="1.2.3"
+SCRIPT_VERSION="1.2.4"
 VERSION_FILE="$HOME/.config/homeos-first-login-version"
 LANG_CODE=${LANG:0:2}
 
@@ -62,25 +62,9 @@ else
     echo "You can create this file to specify Flatpaks to install"
 fi
 
-# Rename Bazaar to "App Store" in menu
-APP_ID="io.github.kolunmi.Bazaar"
-NEW_NAME="App Store"
-
-USER_DESKTOP_DIR="$HOME/.local/share/applications"
-SYSTEM_DESKTOP_DIR="/var/lib/flatpak/exports/share/applications"
-
-SRC_FILE="$SYSTEM_DESKTOP_DIR/$APP_ID.desktop"
-DEST_FILE="$USER_DESKTOP_DIR/$APP_ID.desktop"
-
-mkdir -p "$USER_DESKTOP_DIR"
-
-if [ -f "$SRC_FILE" ]; then
-    cp "$SRC_FILE" "$DEST_FILE"
-    sed -i "s/^Name=.*/Name=$NEW_NAME/" "$DEST_FILE"
-    echo "✅ $APP_ID menu name changed to: $NEW_NAME"
-else
-    echo "❌ Desktop file for $APP_ID not found!"
-fi
+# Apply Flatpak overrides for better integration
+echo "Applying Flatpak overrides..."
+flatpak override --user io.github.kolunmi.Bazaar --filesystem=host-etc
 
 # Enable GNOME Shell extensions
 echo "Enabling GNOME Shell extensions..."
@@ -135,18 +119,6 @@ gsettings set org.gnome.desktop.privacy report-technical-problems false
 gsettings set org.gnome.desktop.privacy send-software-usage-stats false
 
 echo "✓ GNOME configuration complete"
-
-# Organize LibreOffice applications into a folder
-echo "Organizing LibreOffice applications..."
-mkdir -p "$HOME/.local/share/applications"
-
-# Create LibreOffice folder using gsettings
-gsettings set org.gnome.desktop.app-folders folder-children "['Utilities', 'YaST', 'LibreOffice']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ name 'LibreOffice'
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ categories "['Office']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/LibreOffice/ apps "['org.libreoffice.LibreOffice.desktop', 'org.libreoffice.LibreOffice-writer.desktop', 'org.libreoffice.LibreOffice-calc.desktop', 'org.libreoffice.LibreOffice-impress.desktop', 'org.libreoffice.LibreOffice-draw.desktop', 'org.libreoffice.LibreOffice-base.desktop', 'org.libreoffice.LibreOffice-math.desktop', 'org.libreoffice.LibreOffice-startcenter.desktop']"
-
-echo "✓ LibreOffice applications organized into folder"
 
 # Set up custom GNOME keybindings
 echo "Configuring custom GNOME shortcuts..."

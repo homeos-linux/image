@@ -138,14 +138,14 @@ sections:
       - homeos-section
       - homeos-essential
     appids:
-      - org.mozilla.firefox
-      - org.gnome.Nautilus
-      - org.gnome.Terminal
-      - org.gnome.TextEditor
-      - org.gnome.Calculator
-      - org.gnome.SystemMonitor
-      - org.gnome.Extensions
-      - com.mattjakeman.ExtensionManager
+      - com.discordapp.Discord
+      - com.spotify.Client
+      - com.valvesoftware.Steam
+      - org.prismlauncher.PrismLauncher
+      - com.bitwarden.desktop
+      - de.schmidhuberj.Flare
+      - org.nickvision.tubeconverter
+      - net.codelogistics.webapps
 
   - title: "💼 Productivity & Office"
     subtitle: "Get work done efficiently with these powerful tools"
@@ -182,7 +182,6 @@ sections:
       - org.videolan.VLC
       - org.gnome.Photos
       - org.gnome.Music
-      - com.spotify.Client
       - org.darktable.Darktable
 
   - title: "🎮 Gaming & Entertainment"

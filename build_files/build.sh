@@ -53,6 +53,10 @@ echo ""
 echo ""
 /ctx/setup-user-session.sh
 
+# Install GNOME extensions
+echo ""
+/ctx/12-extensions.sh
+
 echo ""
 echo "=========================================="
 echo "✓ Custom image build process complete!"

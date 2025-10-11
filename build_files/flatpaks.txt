@@ -42,3 +42,4 @@ com.ranfdev.DistroShelf
 app.devsuite.Ptyxis
 net.nokyan.Resources
 org.gnome.Evolution
+it.mijorus.smile
