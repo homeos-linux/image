@@ -19,29 +19,6 @@ if ! command -v docker &> /dev/null; then
     echo "✓ Symlinked podman to docker"
 fi
 
-# Create default distrobox configuration
-cat > /etc/distrobox/distrobox.conf << 'EOF'
-# homeOS Distrobox Configuration
-# This file contains default settings for Distrobox on homeOS
-
-# Default container manager (podman is preferred on homeOS)
-container_manager="podman"
-
-# Default image for new containers
-container_image_default="registry.fedoraproject.org/fedora-toolbox:latest"
-
-# Enable X11 forwarding by default
-container_init_hook="xhost +si:localuser:\$USER 2>/dev/null || true"
-
-# Default additional packages to install in containers
-container_additional_packages="git vim nano curl wget htop"
-
-# Enable home directory integration
-container_home_prefix="\$HOME/.local/share/containers/distrobox"
-EOF
-
-echo "✓ Distrobox configuration created"
-
 # Create helpful container management scripts
 # Create a script to set up common development containers
 cp /ctx/core/scripts/homeos-setup-containers /usr/bin/homeos-setup-containers
