@@ -1,13 +1,13 @@
 #!/bin/bash
 set -ouex pipefail
 
-echo "=== Downloading GNOME extensions ==="
+echo "=== Downloading GNOME extensions system-wide ==="
 
-# Zielordner
+# Zielordner für systemweite Installation
 EXT_PATH="/usr/share/gnome-shell/extensions"
 mkdir -p "$EXT_PATH"
 
-# List of GNOME extension IDs
+# Liste der GNOME Extension IDs
 EXTENSIONS=(
     307
     5895
@@ -29,16 +29,34 @@ for EXT_ID in "${EXTENSIONS[@]}"; do
     echo "Processing extension ID: $EXT_ID"
 
     META_JSON=$(curl -s "https://extensions.gnome.org/extension-info/?pk=$EXT_ID")
-    UUID=$(echo $META_JSON | jq -r '.uuid')
-    UUID_WITHOUT_AT=$(echo $UUID | tr -d '@')
-    VERSION=$(echo $META_JSON | jq -r '.shell_version_map["48"].version')
+    UUID=$(echo "$META_JSON" | jq -r '.uuid')
+    UUID_CLEAN=$(echo "$UUID" | tr -d '@')
+
+    VERSION=$(echo "$META_JSON" | jq -r '.shell_version_map["48"] // .shell_version_map | to_entries | map(.value) | max')
 
     ZIP_PATH="$TMP_DIR/${UUID}.zip"
-    curl -L -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID_WITHOUT_AT.v$VERSION.shell-extension.zip"
 
-    gnome-extensions install -fq "$ZIP_PATH"
+    # Download prüfen
+    if ! curl -fL -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID_CLEAN.v$VERSION.shell-extension.zip"; then
+        echo "⚠️  Failed to download $UUID v$VERSION, skipping..."
+        continue
+    fi
+
+    EXT_DIR="$EXT_PATH/$UUID"
+    mkdir -p "$EXT_DIR"
+    unzip -oq "$ZIP_PATH" -d "$EXT_DIR"
+
+    if [ -d "$EXT_DIR/schemas" ]; then
+        glib-compile-schemas "$EXT_DIR/schemas"
+    fi
+
+    chown -R root:root "$EXT_DIR"
+    find "$EXT_DIR" -type d -exec chmod 755 {} \;
+    find "$EXT_DIR" -type f -exec chmod 644 {} \;
+
+    echo "✓ Installed $UUID"
 done
 
-# Cleanup
 rm -rf "$TMP_DIR"
-echo "✓ All extensions downloaded and schemas compiled"
+
+echo "✓ All extensions downloaded and installed system-wide"
