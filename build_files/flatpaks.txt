@@ -43,3 +43,4 @@ app.devsuite.Ptyxis
 net.nokyan.Resources
 org.gnome.Evolution
 it.mijorus.smile
+com.mattjakeman.ExtensionManager
