@@ -1,0 +1,7 @@
+.title {
+  font-family: "URW Bookman";
+}
+
+headerbar .title {
+  font-family: sans-serif;
+}

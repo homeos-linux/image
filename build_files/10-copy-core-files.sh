@@ -40,3 +40,9 @@ echo "✓ homeos-update-gui desktop entry created"
 mkdir -p /etc/homeos
 cp /ctx/flatpaks.txt /etc/homeos/flatpaks.txt
 echo "✓ Flatpak list copied to /etc/homeos/flatpaks.txt"
+
+# Set up gtk.css
+
+echo "Setting up GTK theme..."
+cp /ctx/core/branding/gtk.css /usr/share/gtk-4.0/gtk.css
+echo "✓ GTK theme configured"
