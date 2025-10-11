@@ -12,10 +12,18 @@ if [ -f "$VERSION_FILE" ]; then
     CURRENT_VERSION=$(cat "$VERSION_FILE")
 fi
 
+# Check if Internet is available
+if ! ping -c 1 8.8.8.8 &> /dev/null; then
+    echo "⚠ No internet connection detected. Setup cannot continue."
+    exit 1
+fi
+
 # Skip if already run with same or newer version
 if [ "$CURRENT_VERSION" = "$SCRIPT_VERSION" ]; then
     exit 0
 fi
+
+echo "Internet connection detected. Continuing setup..."
 
 echo "Setting up homeOS user session (version $SCRIPT_VERSION)..."
 
