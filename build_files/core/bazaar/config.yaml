@@ -139,7 +139,7 @@ sections:
       - homeos-essential
     appids:
       - com.discordapp.Discord
-      - com.spotify.Client
+      - io.github.nokse22.high-tide
       - com.valvesoftware.Steam
       - org.prismlauncher.PrismLauncher
       - com.bitwarden.desktop
