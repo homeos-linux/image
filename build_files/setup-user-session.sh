@@ -59,7 +59,7 @@ show-battery-percentage=true
 enable-hot-corners=false
 color-scheme='prefer-dark'
 gtk-theme='Adwaita-dark'
-accent-color='red'
+accent-color='blue'
 
 [org/gnome/desktop/wm/preferences]
 button-layout='appmenu:minimize,maximize,close'

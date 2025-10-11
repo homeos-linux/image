@@ -2,6 +2,8 @@
   font-family: "URW Bookman";
 }
 
-headerbar .title {
+headerbar .title,
+row > box > box > label.title,
+.subtitle {
   font-family: sans-serif;
 }
