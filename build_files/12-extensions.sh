@@ -38,7 +38,7 @@ for EXT_ID in "${EXTENSIONS[@]}"; do
 
     EXT_DIR="$EXT_PATH/$UUID"
     mkdir -p "$EXT_DIR"
-    unzip -q "$ZIP_PATH" -d "$EXT_DIR"
+    unzip -oq "$ZIP_PATH" -d "$EXT_DIR"
 
     if [ -d "$EXT_DIR/schemas" ]; then
         echo "Compiling schemas for $UUID..."
