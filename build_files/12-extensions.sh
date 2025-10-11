@@ -36,7 +36,7 @@ for EXT_ID in "${EXTENSIONS[@]}"; do
 
     # ZIP runterladen
     ZIP_PATH="$TMP_DIR/${UUID}.zip"
-    curl -L -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID.v$VERSION.shell-extension.zip"
+    curl -L -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID_WITHOUT_AT.v$VERSION.shell-extension.zip"
 
     # Entpacken
     EXT_DIR="$EXT_PATH/$UUID"
