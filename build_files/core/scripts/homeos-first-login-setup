@@ -13,15 +13,30 @@ if [ -f "$VERSION_FILE" ]; then
     CURRENT_VERSION=$(cat "$VERSION_FILE")
 fi
 
-# Show zenity info screen in German or English
-ZENITY_PID=""
+ZENITY_PIPE="/tmp/homeos-setup-zenity.pipe"
+ZENITY_BG_PID=""
 if command -v zenity &> /dev/null; then
+    mkfifo "$ZENITY_PIPE"
+
+    # Starte Zenity im Hintergrund
     if [ "$LANG_CODE" = "de" ]; then
-        (zenity --progress --pulsate --no-cancel --auto-close --width=400 --title="homeOS Einrichtung" --text="Bitte warten Sie während wir Ihr System konfigurieren..." &) &
+        zenity --progress --pulsate --no-cancel --auto-close --width=400 \
+            --title="homeOS Einrichtung" \
+            --text="Bitte warten Sie während wir Ihr System konfigurieren..." < "$ZENITY_PIPE" &
     else
-        (zenity --progress --pulsate --no-cancel --auto-close --width=400 --title="homeOS Setup" --text="Please wait while we configure your system..." &) &
+        zenity --progress --pulsate --no-cancel --auto-close --width=400 \
+            --title="homeOS Setup" \
+            --text="Please wait while we configure your system..." < "$ZENITY_PIPE" &
     fi
-    ZENITY_PID=$!
+    ZENITY_BG_PID=$!
+
+    # Schreib-Endpunkt der Pipe in Hintergrund offen halten
+    exec 3> "$ZENITY_PIPE"
+    if [ "$LANG_CODE" = "de" ]; then
+        echo "# Bitte warten Sie während wir Ihr System konfigurieren..." >&3
+    else
+        echo "# Please wait while we configure your system..." >&3
+    fi
 fi
 
 # Check if Internet is available
@@ -203,9 +218,13 @@ echo "$SCRIPT_VERSION" > "$VERSION_FILE"
 echo "✓ homeOS user setup complete (version $SCRIPT_VERSION)"
 
 # Close zenity spinner if running
-if [ -n "$ZENITY_PID" ] && kill -0 "$ZENITY_PID" 2>/dev/null; then
-    kill "$ZENITY_PID" 2>/dev/null
+if [ -n "$ZENITY_BG_PID" ] && kill -0 "$ZENITY_BG_PID" 2>/dev/null; then
+    echo 100 >&3  # schreib Fortschritt
+    sleep 1
+    kill "$ZENITY_BG_PID" 2>/dev/null
 fi
+rm -f "$ZENITY_PIPE"
+exec 3>&-
 
 # Show welcome notification (only on first install, not upgrades)
 if [ -z "$CURRENT_VERSION" ] && command -v notify-send &> /dev/null; then
