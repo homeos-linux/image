@@ -30,12 +30,13 @@ for EXT_ID in "${EXTENSIONS[@]}"; do
 
     # Metadata abrufen
     META_JSON=$(curl -s "https://extensions.gnome.org/extension-info/?pk=$EXT_ID")
-    UUID=$(echo "$META_JSON" | grep -Po '"uuid": *"\K[^"]+')
-    VERSION=$(echo "$META_JSON" | grep -Po '"latest_version":\K[0-9]+')
+    UUID=$(echo $META_JSON | jq -r '.uuid')
+    UUID_WITHOUT_AT=$(echo $UUID | tr -d '@')
+    VERSION=$(echo $META_JSON | jq -r '.shell_version_map["48"].version')
 
     # ZIP runterladen
     ZIP_PATH="$TMP_DIR/${UUID}.zip"
-    curl -L -o "$ZIP_PATH" "https://extensions.gnome.org/download-extension/$UUID.shell-extension.zip?version_tag=$VERSION"
+    curl -L -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID.v$VERSION.shell-extension.zip"
 
     # Entpacken
     EXT_DIR="$EXT_PATH/$UUID"
