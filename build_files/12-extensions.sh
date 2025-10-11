@@ -31,7 +31,7 @@ for EXT_ID in "${EXTENSIONS[@]}"; do
     META_JSON=$(curl -s "https://extensions.gnome.org/extension-info/?pk=$EXT_ID")
     UUID=$(echo $META_JSON | jq -r '.uuid')
     UUID_WITHOUT_AT=$(echo $UUID | tr -d '@')
-    VERSION=$(echo $META_JSON | jq -r '.shell_version_map.49.version')
+    VERSION=$(echo $META_JSON | jq -r '.shell_version_map["49"].version')
 
     ZIP_PATH="$TMP_DIR/${UUID}.zip"
 
