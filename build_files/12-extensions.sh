@@ -29,15 +29,14 @@ for EXT_ID in "${EXTENSIONS[@]}"; do
     echo "Processing extension ID: $EXT_ID"
 
     META_JSON=$(curl -s "https://extensions.gnome.org/extension-info/?pk=$EXT_ID")
-    UUID=$(echo "$META_JSON" | jq -r '.uuid')
-    UUID_CLEAN=$(echo "$UUID" | tr -d '@')
-
-    VERSION=$(echo "$META_JSON" | jq -r '.shell_version_map["48"] // .shell_version_map | to_entries | map(.value) | max')
+    UUID=$(echo $META_JSON | jq -r '.uuid')
+    UUID_WITHOUT_AT=$(echo $UUID | tr -d '@')
+    VERSION=$(echo $META_JSON | jq -r '.shell_version_map.49.version')
 
     ZIP_PATH="$TMP_DIR/${UUID}.zip"
 
     # Download prüfen
-    if ! curl -fL -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID_CLEAN.v$VERSION.shell-extension.zip"; then
+    if ! curl -fL -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID_WITHOUT_AT.v$VERSION.shell-extension.zip"; then
         echo "⚠️  Failed to download $UUID v$VERSION, skipping..."
         continue
     fi
