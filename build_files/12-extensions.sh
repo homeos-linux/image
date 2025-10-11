@@ -1,15 +1,13 @@
 #!/bin/bash
-
 set -ouex pipefail
 
-echo "=== Setting up GNOME extensions ==="
+echo "=== Downloading GNOME extensions ==="
 
-# Install helper script
-curl -L https://raw.githubusercontent.com/jasonmb626/gnome-shell-extension-installer/master/gnome-shell-extension-installer > /tmp/gnome-shell-extension-installer
-chmod +x /tmp/gnome-shell-extension-installer
-echo "✓ gnome-shell-extension-installer script installed"
+# Zielordner
+EXT_PATH="/usr/share/gnome-shell/extensions"
+mkdir -p "$EXT_PATH"
 
-# List of GNOME extensions to install
+# List of GNOME extension IDs
 EXTENSIONS=(
     307
     5895
@@ -24,23 +22,33 @@ EXTENSIONS=(
     3240
 )
 
-EXT_PATH="/usr/share/gnome-shell/extensions"
+TMP_DIR="/tmp/gnome-ext-download"
+mkdir -p "$TMP_DIR"
 
-# Install each extension
 for EXT_ID in "${EXTENSIONS[@]}"; do
-    echo "Installing GNOME extension ID: $EXT_ID"
-    /tmp/gnome-shell-extension-installer "$EXT_ID" --yes || echo "Failed to install extension ID: $EXT_ID"
+    echo "Processing extension ID: $EXT_ID"
 
-    # Find the UUID folder created by the installer
-    EXT_UUID=$(ls -1 "$EXT_PATH" | grep -i "$EXT_ID" || true)
-    if [ -n "$EXT_UUID" ] && [ -d "$EXT_PATH/$EXT_UUID/schemas" ]; then
-        echo "Compiling schemas for $EXT_UUID..."
-        glib-compile-schemas "$EXT_PATH/$EXT_UUID/schemas"
+    # Metadata abrufen
+    META_JSON=$(curl -s "https://extensions.gnome.org/extension-info/?pk=$EXT_ID")
+    UUID=$(echo "$META_JSON" | grep -Po '"uuid": *"\K[^"]+')
+    VERSION=$(echo "$META_JSON" | grep -Po '"latest_version":\K[0-9]+')
+
+    # ZIP runterladen
+    ZIP_PATH="$TMP_DIR/${UUID}.zip"
+    curl -L -o "$ZIP_PATH" "https://extensions.gnome.org/download-extension/$UUID.shell-extension.zip?version_tag=$VERSION"
+
+    # Entpacken
+    EXT_DIR="$EXT_PATH/$UUID"
+    mkdir -p "$EXT_DIR"
+    unzip -q "$ZIP_PATH" -d "$EXT_DIR"
+
+    # GLib-Schemas kompilieren
+    if [ -d "$EXT_DIR/schemas" ]; then
+        echo "Compiling schemas for $UUID..."
+        glib-compile-schemas "$EXT_DIR/schemas"
     fi
 done
 
-echo "✓ GNOME extensions installation complete"
-
-# Clean up
-rm /tmp/gnome-shell-extension-installer
-echo "✓ Cleanup complete"
+# Cleanup
+rm -rf "$TMP_DIR"
+echo "✓ All extensions downloaded and schemas compiled"
