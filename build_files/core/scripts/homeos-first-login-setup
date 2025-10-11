@@ -3,7 +3,7 @@
 # This script runs automatically on first user login and when configuration updates
 
 # Script version - increment when adding new features
-SCRIPT_VERSION="1.2.4"
+SCRIPT_VERSION="0.0.1"
 VERSION_FILE="$HOME/.config/homeos-first-login-version"
 LANG_CODE=${LANG:0:2}
 
@@ -135,8 +135,8 @@ gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Super>f']"
 
 # Launch MissionCenter with Shift-Super-M
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "MissionCenter"
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "io.missioncenter.MissionCenter"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "Resources"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "net.nokyan.Resources"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<Shift><Super>m"
 
 # Open home folder with Super-E
@@ -146,6 +146,11 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"
 
 echo "✓ Custom keybindings configured"
+
+# Setup hidden apps
+echo "Setting up hidden applications..."
+dconf write /org/gnome/shell/extensions/app-hider/hidden-apps "['htop.desktop', 'nvtop.desktop', 'org.gnome.Ptyxis.desktop']"
+echo "✓ Hidden applications configured"
 
 # Set up demonhide autostart
 echo "Setting up demonhide autostart..."
