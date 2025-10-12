@@ -3,7 +3,7 @@
 # This script runs automatically on first user login and when configuration updates
 
 # Script version - increment when adding new features
-SCRIPT_VERSION="2"
+SCRIPT_VERSION="3"
 VERSION_FILE="$HOME/.config/homeos-first-login-version"
 LANG_CODE=${LANG:0:2}
 
@@ -11,6 +11,22 @@ LANG_CODE=${LANG:0:2}
 CURRENT_VERSION=""
 if [ -f "$VERSION_FILE" ]; then
     CURRENT_VERSION=$(cat "$VERSION_FILE")
+fi
+
+# Check if Internet is available
+if ! ping -c 1 8.8.8.8 &> /dev/null; then
+    echo "⚠ No internet connection detected. Setup cannot continue."
+    if [ "$LANG_CODE" = "de" ]; then
+        notify-send "homeOS Setup" "Keine Internetverbindung erkannt. Bitte verbinden Sie sich mit dem Internet und starten Sie den Computer neu, um die Einrichtung abzuschließen." --icon=dialog-warning
+    else
+        notify-send "homeOS Setup" "No internet connection detected. Please connect to the internet and restart your computer to complete setup." --icon=dialog-warning
+    fi
+    exit 1
+fi
+
+# Skip if already run with same or newer version
+if [ "$CURRENT_VERSION" = "$SCRIPT_VERSION" ]; then
+    exit 0
 fi
 
 ZENITY_PIPE="/tmp/homeos-setup-zenity.pipe"
@@ -37,22 +53,6 @@ if command -v zenity &> /dev/null; then
     else
         echo "# Please wait while we configure your system..." >&3
     fi
-fi
-
-# Check if Internet is available
-if ! ping -c 1 8.8.8.8 &> /dev/null; then
-    echo "⚠ No internet connection detected. Setup cannot continue."
-    if [ "$LANG_CODE" = "de" ]; then
-        notify-send "homeOS Setup" "Keine Internetverbindung erkannt. Bitte verbinden Sie sich mit dem Internet und starten Sie den Computer neu, um die Einrichtung abzuschließen." --icon=dialog-warning
-    else
-        notify-send "homeOS Setup" "No internet connection detected. Please connect to the internet and restart your computer to complete setup." --icon=dialog-warning
-    fi
-    exit 1
-fi
-
-# Skip if already run with same or newer version
-if [ "$CURRENT_VERSION" = "$SCRIPT_VERSION" ]; then
-    exit 0
 fi
 
 echo "Internet connection detected. Continuing setup..."
@@ -194,22 +194,10 @@ AUTOSTART_EOF
 
 echo "✓ DemonHide autostart configured"
 
-# Set up Damask autostart
-echo "Setting up Damask autostart..."
-cat > "$HOME/.config/autostart/damask.desktop" << 'AUTOSTART_EOF'
-[Desktop Entry]
-Type=Application
-Name=app.drey.Damask
-X-XDP-Autostart=app.drey.Damask
-Exec=flatpak run --command=damask app.drey.Damask --background
-X-Flatpak=app.drey.Damask
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-StartupNotify=false
-AUTOSTART_EOF
-
-echo "✓ Damask autostart configured"
+# Set up GTK style
+echo "Setting up GTK style..."
+cp /etc/skel/.config/gtk-4.0/gtk.css "$HOME/.config/gtk-4.0/gtk.css"
+echo "✓ GTK style configured"
 
 # Mark setup as complete with version
 

@@ -7,7 +7,6 @@
 # Format: one application ID per line
 # Lines starting with # are comments and will be ignored
 
-app.drey.Damask
 ca.desrt.dconf-editor
 com.github.tchx84.Flatseal
 io.github.flattool.Warehouse
