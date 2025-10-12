@@ -43,6 +43,8 @@ echo "✓ Flatpak list copied to /etc/homeos/flatpaks.txt"
 
 # Set up gtk.css
 echo "Setting up GTK theme..."
+mkdir -p /usr/share/gtk-4.0
+mkdir -p /etc/skel/.config/gtk-4.0
 cp /ctx/core/branding/gtk.css /usr/share/gtk-4.0/gtk.css
 cp /ctx/core/branding/gtk.css /etc/skel/.config/gtk-4.0/gtk.css
 echo "✓ GTK theme configured"
