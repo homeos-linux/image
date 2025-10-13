@@ -18,7 +18,7 @@ org.gnome.baobab
 org.gnome.Calculator
 org.gnome.clocks
 org.gnome.Contacts
-org.gnome.Evince
+org.gnome.Papers
 org.gnome.Firmware
 org.gnome.Logs
 org.gnome.Loupe
@@ -27,7 +27,7 @@ org.gnome.Music
 org.gnome.Photos
 org.gnome.SimpleScan
 org.gnome.TextEditor
-org.gnome.Totem
+org.gnome.Showtime
 org.gnome.World.PikaBackup
 org.gnome.Weather
 org.gnome.font-viewer
