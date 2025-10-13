@@ -3,7 +3,7 @@
 # This script runs automatically on first user login and when configuration updates
 
 # Script version - increment when adding new features
-SCRIPT_VERSION="3"
+SCRIPT_VERSION="4"
 VERSION_FILE="$HOME/.config/homeos-first-login-version"
 LANG_CODE=${LANG:0:2}
 
@@ -105,9 +105,15 @@ gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
 gsettings set org.gnome.shell.extensions.dash-to-dock intellihide true
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'DYNAMIC'
+gsettings set org.gnome.shell.extensions.dash-to-dock min-alpha 0
+gsettings set org.gnome.shell.extensions.dash-to-dock max-alpha 1
 
 # Configure blur-my-shell extension
 dconf write /org/gnome/shell/extensions/blur-my-shell/pipelines "{'pipeline_default': {'name': <'Default'>, 'effects': <[<{'type': <'native_static_gaussian_blur'>, 'id': <'effect_000000000000'>, 'params': <{'radius': <30>, 'brightness': <0.59999999999999998>}>}>]>}, 'pipeline_default_rounded': {'name': <'Default rounded'>, 'effects': <[<{'type': <'native_static_gaussian_blur'>, 'id': <'effect_000000000001'>, 'params': <{'radius': <30>, 'brightness': <0.59999999999999998>}>}>, <{'type': <'noise'>, 'id': <'effect_66568248059666'>, 'params': <{'noise': <0.40000000000000002>, 'lightness': <0.83999999999999997>}>}>, <{'type': <'corner'>, 'id': <'effect_000000000002'>, 'params': <{'radius': <24>}>}>]>}}"
+
+# Configure panel corners
+dconf write /org/gnome/shell/extensions/panel-corners/panel-corners false
 
 # Enable user-theme extension
 gsettings set org.gnome.shell.extensions.user-theme name ""
