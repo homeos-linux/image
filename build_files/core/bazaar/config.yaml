@@ -221,3 +221,4 @@ sections:
       - com.github.huluti.Curtail
       - io.github.dvlv.boxbuddyrs
       - io.github.ldelossa.Distroshelf
+      - com.visualstudio.code

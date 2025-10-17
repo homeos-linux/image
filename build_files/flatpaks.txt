@@ -40,3 +40,6 @@ net.nokyan.Resources
 org.gnome.Evolution
 it.mijorus.smile
 com.mattjakeman.ExtensionManager
+
+io.github.nokse22.Exhibit
+com.github.k4zmu2a.spacecadetpinball
