@@ -44,7 +44,7 @@ EOF
 # Create default settings
 cat > /etc/dconf/db/homeos.d/00-homeos-defaults << 'EOF'
 [org/gnome/shell]
-enabled-extensions=['app-hider@lynith.dev', 'caffeine@patapon.info', 'AlphabeticalAppGrid@stuarthayhurst', 'dash-to-dock@micxgx.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com', 'hide-cursor@elcste.com', 'panel-corners@aunetx', 'smile-extension@mijorus.it', 'grand-theft-focus@zalckos.github.com', 'blur-my-shell@aunetx', 'add-to-desktop@tommimon.github.com', 'gtk4-ding@smedius.gitlab.com']
+enabled-extensions=['app-hider@lynith.dev', 'caffeine@patapon.info', 'AlphabeticalAppGrid@stuarthayhurst', 'dash-to-dock@micxgx.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com', 'hide-cursor@elcste.com', 'panel-corners@aunetx', 'smile-extension@mijorus.it', 'grand-theft-focus@zalckos.github.com', 'blur-my-shell@aunetx', 'add-to-desktop@tommimon.github.com', 'ding@rastersoft.com']
 
 [org/gnome/shell/extensions/dash-to-dock]
 dock-position='BOTTOM'
