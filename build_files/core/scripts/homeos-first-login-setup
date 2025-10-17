@@ -91,6 +91,12 @@ fi
 # Apply Flatpak overrides for better integration
 echo "Applying Flatpak overrides..."
 flatpak override --user io.github.kolunmi.Bazaar --filesystem=host-etc
+flatpak override --user --filesystem=xdg-config/gtk-3.0:rw
+flatpak override --user --filesystem=xdg-config/gtk-4.0:rw
+ln -sf $XDG_RUNTIME_DIR/{app/com.discordapp.Discord,}/discord-ipc-0
+mkdir -p ~/.config/user-tmpfiles.d
+touch ~/.config/user-tmpfiles.d/discord-rpc-flatpak-fix.conf
+echo "L %t/discord-ipc-0 - - - - app/com.discordapp.Discord/discord-ipc-0" | tee ~/.config/user-tmpfiles.d/discord-rpc-flatpak-fix.conf
 
 # Enable GNOME Shell extensions
 echo "Enabling GNOME Shell extensions..."
