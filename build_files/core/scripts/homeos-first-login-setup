@@ -88,6 +88,24 @@ else
     echo "You can create this file to specify Flatpaks to install"
 fi
 
+echo "Removing bloat..."
+# List of packages to remove
+PACKAGES_TO_REMOVE=(
+    "org.gnome.Totem",
+    "org.gnome.Evince"
+)
+# Remove the packages
+if [ ${#PACKAGES_TO_REMOVE[@]} -gt 0 ]; then
+    echo "Removing ${#PACKAGES_TO_REMOVE[@]} unnecessary packages..."
+    for pkg in "${PACKAGES_TO_REMOVE[@]}"; do
+        echo "Removing: $pkg"
+        flatpak uninstall --system -y "$pkg" || echo "Failed to remove $pkg"
+    done
+    echo "✓ Unnecessary packages removal complete"
+else
+    echo "No packages specified for removal"
+fi
+
 # Apply Flatpak overrides for better integration
 echo "Applying Flatpak overrides..."
 flatpak override --user io.github.kolunmi.Bazaar --filesystem=host-etc
