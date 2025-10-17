@@ -91,11 +91,15 @@ cd /tmp
 git clone https://github.com/homeos-linux/grub-theme.git
 mkdir -p /boot/grub2/themes/
 cp -r grub-theme /boot/grub2/themes/homeos-theme
-grub2-mkconfig -o /etc/grub2.cfg
 sed -i 's|^GRUB_TERMINAL_OUTPUT=.*|GRUB_TERMINAL_OUTPUT="gfxterm"|' /etc/default/grub
 sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/boot/grub2/themes/homeos-theme/theme.txt"|' /etc/default/grub
 rm -r grub-theme
-grub2-mkconfig -o /etc/grub2.cfg
+if grub2-probe / >/dev/null 2>&1; then
+  grub2-mkconfig -o /etc/grub2.cfg
+else
+  echo "Skipping grub2-mkconfig (no block device)"
+fi
+
 
 echo "✓ OS identity setup complete for homeOS"
 
