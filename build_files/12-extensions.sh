@@ -3,6 +3,8 @@ set -ouex pipefail
 
 echo "=== Downloading GNOME extensions system-wide ==="
 
+dnf install -y https://gitlab.com/smedius/desktop-icons-ng/-/raw/main/Downloads/gnome-shell-extension-adw-desktop-icons-100.8-2.el5.local.noarch.rpm
+
 # Zielordner für systemweite Installation
 EXT_PATH="/usr/share/gnome-shell/extensions"
 mkdir -p "$EXT_PATH"
@@ -18,7 +20,6 @@ EXTENSIONS=(
     6096
     5410
     3193
-    2087
     3240
 )
 

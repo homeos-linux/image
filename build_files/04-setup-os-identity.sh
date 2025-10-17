@@ -86,6 +86,16 @@ if [[ -f /usr/sbin/grub2-switch-to-blscfg ]]; then
   sed -i "s|^EFIDIR=.*|EFIDIR=\"fedora\"|" /usr/sbin/grub2-switch-to-blscfg
 fi
 
+echo "Installing GRUB theme..."
+cd /tmp
+git clone https://github.com/logonoff/bgrt-grub-theme.git
+cd bgrt-grub-theme
+chmod 755 install.sh
+./install.sh
+cd ..
+rm -r bgrt-grub-theme
+grub2-mkconfig -o /etc/grub2.cfg
+
 echo "✓ OS identity setup complete for homeOS"
 
 echo "::endgroup::"
