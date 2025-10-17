@@ -89,6 +89,7 @@ fi
 echo "Installing GRUB theme..."
 cd /tmp
 git clone https://github.com/homeos-linux/grub-theme.git
+mkdir -p /boot/grub2/themes/
 cp -r grub-theme /boot/grub2/themes/homeos-theme
 grub2-mkconfig -o /etc/grub2.cfg
 sed -i 's|^GRUB_TERMINAL_OUTPUT=.*|GRUB_TERMINAL_OUTPUT="gfxterm"|' /etc/default/grub
