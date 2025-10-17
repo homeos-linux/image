@@ -43,3 +43,6 @@ com.mattjakeman.ExtensionManager
 
 io.github.nokse22.Exhibit
 com.github.k4zmu2a.spacecadetpinball
+
+com.github.PintaProject.Pinta
+io.github.flattool.Ignition
