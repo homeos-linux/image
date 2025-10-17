@@ -91,8 +91,8 @@ cd /tmp
 git clone https://github.com/homeos-linux/grub-theme.git
 mkdir -p /boot/grub2/themes/
 cp -r grub-theme /boot/grub2/themes/homeos-theme
-sed -i 's|^GRUB_TERMINAL_OUTPUT=.*|GRUB_TERMINAL_OUTPUT="gfxterm"|' /etc/default/grub
-sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/boot/grub2/themes/homeos-theme/theme.txt"|' /etc/default/grub
+sed -i 's|^GRUB_TERMINAL_OUTPUT=.*|GRUB_TERMINAL_OUTPUT="gfxterm"|' /usr/sbin/grub2-switch-to-blscfg
+sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/boot/grub2/themes/homeos-theme/theme.txt"|' /usr/sbin/grub2-switch-to-blscfg
 rm -r grub-theme
 if grub2-probe / >/dev/null 2>&1; then
   grub2-mkconfig -o /etc/grub2.cfg
