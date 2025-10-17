@@ -88,12 +88,12 @@ fi
 
 echo "Installing GRUB theme..."
 cd /tmp
-git clone https://github.com/logonoff/bgrt-grub-theme.git
-cd bgrt-grub-theme
-chmod 755 install.sh
-./install.sh
-cd ..
-rm -r bgrt-grub-theme
+git clone https://github.com/homeos-linux/grub-theme.git
+cp -r grub-theme /boot/grub2/themes/homeos-theme
+grub2-mkconfig -o /etc/grub2.cfg
+sed -i 's|^GRUB_TERMINAL_OUTPUT=.*|GRUB_TERMINAL_OUTPUT="gfxterm"|' /etc/default/grub
+sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/boot/grub2/themes/homeos-theme/theme.txt"|' /etc/default/grub
+rm -r grub-theme
 grub2-mkconfig -o /etc/grub2.cfg
 
 echo "✓ OS identity setup complete for homeOS"
