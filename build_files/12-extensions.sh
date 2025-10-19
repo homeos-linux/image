@@ -5,11 +5,11 @@ echo "=== Downloading GNOME extensions system-wide ==="
 
 dnf install -y https://gitlab.com/smedius/desktop-icons-ng/-/raw/main/Downloads/gnome-shell-extension-adw-desktop-icons-100.9-1.el5.local.noarch.rpm
 
-# Zielordner für systemweite Installation
+# Target directory for system-wide installation
 EXT_PATH="/usr/share/gnome-shell/extensions"
 mkdir -p "$EXT_PATH"
 
-# Liste der GNOME Extension IDs
+# List of GNOME Extension IDs
 EXTENSIONS=(
     307
     5895
@@ -36,7 +36,7 @@ for EXT_ID in "${EXTENSIONS[@]}"; do
 
     ZIP_PATH="$TMP_DIR/${UUID}.zip"
 
-    # Download prüfen
+    # Check download
     if ! curl -fL -o "$ZIP_PATH" "https://extensions.gnome.org/extension-data/$UUID_WITHOUT_AT.v$VERSION.shell-extension.zip"; then
         echo "⚠️  Failed to download $UUID v$VERSION, skipping..."
         continue
